@@ -763,7 +763,6 @@
             }
 
             .hero-bg {
-                background-position: center;
                 animation: slow-zoom 30s ease-in-out infinite alternate;
                 /* Slower, subtle zoom */
                 transform: scale(1.02);
@@ -781,7 +780,8 @@
             }
 
             .hero {
-                min-height: 60vh; /* Reduced height for better framing */
+                height: auto;
+                padding: 0; /* Remove padding to keep strict 16:9 */
             }
             .hero-bg {
                 animation: none;
