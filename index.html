@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATL LAB Innovation Project | Future of STEM</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #fbbf24;
+            /* Golden */
+            --secondary: #fef3c7;
+            /* Light Gold */
+            --accent: #d97706;
+            /* Amber */
+            --bg-dark: #000000;
+            /* Pure Black */
+            --bg-card: rgba(20, 20, 20, 0.8);
+            --text-main: #ffffff;
+            --text-dim: #a1a1aa;
+            --glass-border: rgba(251, 191, 36, 0.2);
+            --glow: 0 0 35px rgba(251, 191, 36, 0.2);
+            --gradient: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(217, 119, 6, 0.1) 0%, transparent 50%);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Preloader --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(251, 191, 36, 0.2);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* --- Scroll Progress --- */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            z-index: 2000;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* --- Animations --- */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* --- Glowing Card Effect --- */
+        .glow-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .glow-card:hover::before {
+            opacity: 1;
+        }
+
+        /* --- Navbar Upgrade --- */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1100px;
+            padding: 1rem 2rem;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            top: 0;
+            width: 100%;
+            border-radius: 0;
+            background: rgba(2, 6, 23, 0.9);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary);
+        }
+
+        /* --- Hero Section Upgrade --- */
+        @keyframes slow-zoom {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            animation: slow-zoom 20s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+
+        .hero-bg.active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.6) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(to top, var(--bg-dark), transparent);
+            z-index: 3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 4;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 100px;
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3.5rem, 10vw, 6rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 2rem;
+            letter-spacing: -2px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-tagline {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 3rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 100px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        /* --- Stats Section --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- About Section --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title .underline {
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        /* --- Team Section --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            padding: 2.5rem 1.5rem;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--secondary);
+            padding: 3px;
+            background: var(--bg-dark);
+        }
+
+        .team-card h3 {
+            margin-bottom: 0.25rem;
+            font-size: 1.25rem;
+        }
+
+        .team-card p.role {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .team-card p.bio {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* --- Numbered List Section --- */
+        .numbered-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .number-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .number-card:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+            box-shadow: var(--glow);
+        }
+
+        .number-tag {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: rgba(251, 191, 36, 0.15);
+            /* Subtle Gold */
+            font-family: 'Outfit', sans-serif;
+            flex-shrink: 0;
+            line-height: 1;
+            border-right: 2px solid rgba(251, 191, 36, 0.1);
+            padding-right: 1.5rem;
+        }
+
+        .number-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .number-content p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* --- Demo Section --- */
+        .demo-box {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)),
+                url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200') center/cover;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-overlay {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-dark);
+            cursor: pointer;
+            margin: 0 auto 1rem;
+            transition: transform 0.3s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- Contact Section --- */
+        .contact {
+            text-align: center;
+            background: rgba(30, 41, 59, 0.4);
+        }
+
+        footer {
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* --- Modal Zoom --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.5);
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 3001;
+        }
+
+        /* --- Timeline Section --- */
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid var(--glass-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: calc(-2rem - 6px);
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: clamp(3rem, 8vw, 4.5rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 80vh;
+                /* Shorter for better mobile framing */
+                padding-top: 80px;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-bg {
+                background-position: center;
+                /* Ensures center of the "movie poster" is visible */
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+                /* Simple for now, can add toggle */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 70vh;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-tagline {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+        <p style="margin-top: 1rem; color: var(--primary); font-weight: 600; letter-spacing: 2px;">ATL LAB</p>
+    </div>
+
+    <div id="scroll-progress"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">
+            <div class="logo-icon"><i data-lucide="zap" size="18"></i></div>
+            <span>ATL LAB INNOVATION</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#timeline">Journey</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#demo">Demo</a></li>
+            <li><a href="#project">Project</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <!-- ... (Hero remains same) ... -->
+    <section id="home" class="hero">
+        <div id="hero-slides"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-badge fade-in">ATL LAB Innovation Project 2026 | VISION TEAM</div>
+            <h1 class="fade-in"><span class="gradient-text">ATL LAB</span><br>Innovation Project</h1>
+            <p class="hero-tagline fade-in">Exploring the boundaries of technology and creativity to build solutions for
+                a better tomorrow.</p>
+            <div class="btn-group fade-in">
+                <a href="#team" class="btn-primary">
+                    <span>Meet the Team</span>
+                    <i data-lucide="arrow-right" size="18"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>VISION TEAM</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="team-grid">
+                <div class="team-card fade-in glow-card">
+                    <img src="https://i.ibb.co/Z6WFmyhh/96752d5e-0d7c-4d77-ac5d-f5a7363756f2.jpg" alt="ABHINAV YADAV"
+                        class="profile-pic">
+                    <h3>ABHINAV YADAV</h3>
+                    <p class="role">TEAM LEADER</p>
+                    <p class="bio">Leading the innovation journey and architecting the core logic of the project.</p>
+                </div>
+                <div class="team-card fade-in glow-card">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200"
+                        alt="Ashish" class="profile-pic">
+                    <h3>Ashish</h3>
+                    <p class="role">Design Lead</p>
+                    <p class="bio">Crafting beautiful user interfaces and ensuring premium project aesthetics.</p>
+                </div>
+                <div class="team-card fade-in glow-card">
+                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=200"
+                        alt="Manu" class="profile-pic">
+                    <h3>Manu</h3>
+                    <p class="role">Research Lead</p>
+                    <p class="bio">Analyzing real-world problems to find the most effective technical solutions.</p>
+                </div>
+                <div class="team-card fade-in glow-card">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+                        alt="Harsita" class="profile-pic">
+                    <h3>Harsita</h3>
+                    <p class="role">Presentation</p>
+                    <p class="bio">Communicating our vision effectively to judges and stakeholders.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+
+    <!-- Project Timeline -->
+    <section id="timeline">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Journey</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Phase 01</div>
+                    <div class="timeline-content">
+                        <h3>Brainstorming</h3>
+                        <p>Identifying key problems in the community and selecting the most impactful innovation
+                            project.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Phase 02</div>
+                    <div class="timeline-content">
+                        <h3>Design & CAD</h3>
+                        <p>Creating digital 3D models and circuit diagrams to visualize the final prototype structure.
+                        </p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Phase 03</div>
+                    <div class="timeline-content">
+                        <h3>Prototyping</h3>
+                        <p>Assembling the hardware components and writing the initial code for the core system.</p>
+                    </div>
+                </div>
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Phase 04</div>
+                    <div class="timeline-content">
+                        <h3>Testing</h3>
+                        <p>Rigorous testing and debugging to ensure the system is stable and ready for the final
+                            showcase.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="about">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>About ATL Lab</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-text fade-in">
+                    <p>Atal Tinkering Lab (ATL) is a workspace where young minds can give shape to their ideas through
+                        hands-on do-it-yourself mode and learn innovation skills.</p>
+                    <p>Our project focuses on solving real-world problems using cutting-edge technology, from robotics
+                        to IoT, fostering a culture of curiosity and problem-solving.</p>
+                </div>
+                <div class="about-image fade-in">
+                    <i data-lucide="cpu" size="64" color="#8b5cf6"></i>
+                    <h3 style="margin-top: 1rem;">STEM Excellence</h3>
+                    <p style="color: var(--text-dim);">Building solutions for a better tomorrow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Project Demo</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="demo-box fade-in">
+                <div class="demo-overlay">
+                    <div class="play-btn"><i data-lucide="play"></i></div>
+                    <h3>Watch Prototype</h3>
+                    <p>Experience the innovation in action.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Concepts -->
+    <section id="project">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Project Ideas</h2>
+                <div class="underline"></div>
+            </div>
+            <div id="project-list" class="numbered-list">
+                <!-- Projects will appear here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Get In Touch</h2>
+                <div class="underline"></div>
+            </div>
+            <p class="fade-in">Interested in our project? Let's collaborate!</p>
+            <a href="mailto:contact@atllab.com" class="btn-primary fade-in"
+                style="margin-top: 2rem; display: inline-flex;">
+                <span>Contact Us</span>
+                <i data-lucide="mail" size="18" style="margin-left: 0.5rem;"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Image Zoom Modal -->
+    <div id="image-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img">
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ATL LAB Innovation Project. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="projects.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => preloader.style.display = 'none', 500);
+        });
+
+        // Background Slideshow Logic
+        const heroSlides = document.getElementById('hero-slides');
+        const images = typeof heroImages !== 'undefined' ? heroImages : [
+            'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200'
+        ];
+
+        let currentIndex = 0;
+
+        // Initialize first slide
+        if (heroSlides) {
+            heroSlides.innerHTML = `<div class="hero-bg active" style="background-image: url('${images[0]}');"></div>`;
+        }
+
+        // Preload images
+        images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        function nextSlide() {
+            const nextIndex = (currentIndex + 1) % images.length;
+
+            // Create next slide element
+            const slide = document.createElement('div');
+            slide.className = 'hero-bg';
+            slide.style.backgroundImage = `url('${images[nextIndex]}')`;
+
+            heroSlides.appendChild(slide);
+
+            // Force reflow
+            slide.offsetHeight;
+
+            // Activate next slide
+            slide.classList.add('active');
+
+            // Remove previous slide after transition
+            const prevSlide = heroSlides.children[0];
+            setTimeout(() => {
+                if (heroSlides.children.length > 1) {
+                    heroSlides.removeChild(prevSlide);
+                }
+            }, 1500);
+
+            currentIndex = nextIndex;
+        }
+
+        if (images.length > 1) {
+            setInterval(nextSlide, 5000); // Change every 5 seconds
+        }
+
+        // Interactive Card Glow
+        document.querySelectorAll('.glow-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        });
+
+        // Scroll Progress & Navbar Effect
+        const scrollProgress = document.getElementById('scroll-progress');
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            // Scroll Progress
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollProgress.style.width = scrolled + "%";
+
+            // Navbar Effect
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // --- Image Zoom Logic ---
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeBtn = document.querySelector('.close-modal');
+
+        document.querySelectorAll('.profile-pic').forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', () => {
+                modal.classList.add('active');
+                modalImg.src = img.src;
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+    </script>
+</body>
+
+</html>
