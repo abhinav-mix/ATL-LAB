@@ -154,9 +154,8 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 1100px;
-            padding: 1rem 2rem;
+            width: 100%;
+            padding: 1.5rem 4rem;
             background: transparent;
             backdrop-filter: none;
             z-index: 1000;
@@ -320,6 +319,28 @@
             height: 100%;
             background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
             z-index: 1;
+        }
+
+        .project-info-bar {
+            background: var(--bg-dark);
+            padding: 2.5rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 10;
+        }
+
+        .project-info-text {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 100px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .hero::before {
@@ -755,6 +776,13 @@
         }
 
         @media (max-width: 480px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .hero {
+                min-height: 60vh; /* Reduced height for better framing */
+            }
             .hero-bg {
                 animation: none;
                 /* Disable animation to stop extra zooming */
@@ -804,16 +832,13 @@
     <section id="home" class="hero">
         <div id="hero-slides"></div>
         <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <div class="hero-badge fade-in">ATL LAB Innovation Project 2026 | VISION TEAM</div>
-            <div class="btn-group fade-in">
-                <a href="#team" class="btn-primary">
-                    <span>Meet the Team</span>
-                    <i data-lucide="arrow-right" size="18"></i>
-                </a>
-            </div>
-        </div>
     </section>
+
+    <div class="project-info-bar">
+        <div class="container">
+            <div class="project-info-text fade-in">ATL LAB Innovation Project 2026 | VISION TEAM</div>
+        </div>
+    </div>
 
     <!-- Team Section -->
     <section id="team">
