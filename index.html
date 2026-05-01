@@ -345,11 +345,13 @@
             cursor: pointer;
             z-index: 100;
             transition: all 0.3s;
-            opacity: 0; /* Hidden by default */
+            opacity: 0;
+            /* Hidden by default */
         }
 
         .hero:hover .hero-nav {
-            opacity: 1; /* Show on hover */
+            opacity: 1;
+            /* Show on hover */
         }
 
         .hero-nav:hover {
@@ -359,17 +361,29 @@
             box-shadow: 0 0 20px var(--primary);
         }
 
-        .hero-nav-prev { left: 30px; }
-        .hero-nav-next { right: 30px; }
+        .hero-nav-prev {
+            left: 30px;
+        }
+
+        .hero-nav-next {
+            right: 30px;
+        }
 
         @media (max-width: 768px) {
             .hero-nav {
-                opacity: 1; /* Always show on mobile */
+                opacity: 1;
+                /* Always show on mobile */
                 width: 40px;
                 height: 40px;
             }
-            .hero-nav-prev { left: 10px; }
-            .hero-nav-next { right: 10px; }
+
+            .hero-nav-prev {
+                left: 10px;
+            }
+
+            .hero-nav-next {
+                right: 10px;
+            }
         }
 
         .project-info-bar {
@@ -911,8 +925,8 @@
                 </div>
                 <div class="team-card fade-in glow-card">
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
-                        alt="Harsita" class="profile-pic">
-                    <h3>Harsita</h3>
+                        alt="HARSHITA SETIYA " class="profile-pic">
+                    <h3>HARSHITA SETIYA</h3>
                     <p class="role">Presentation</p>
                     <p class="bio">Communicating our vision effectively to judges and stakeholders.</p>
                 </div>
@@ -1070,13 +1084,13 @@
 
         function showSlide(index) {
             currentIndex = (index + images.length) % images.length;
-            
+
             const slide = document.createElement('div');
             slide.className = 'hero-bg active';
             slide.style.backgroundImage = `url('${images[currentIndex]}')`;
-            
+
             heroSlides.appendChild(slide);
-            
+
             if (heroSlides.children.length > 1) {
                 const oldSlide = heroSlides.children[0];
                 setTimeout(() => {
