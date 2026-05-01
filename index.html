@@ -151,7 +151,7 @@
         /* --- Navbar Upgrade --- */
         nav {
             position: fixed;
-            top: 20px;
+            top: 80px;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
@@ -235,7 +235,9 @@
         }
 
         /* Side Menu Effect */
-        @media (max-width: 4000px) { /* Apply to all sizes as requested */
+        @media (max-width: 4000px) {
+
+            /* Apply to all sizes as requested */
             .nav-links {
                 position: fixed;
                 top: 0;
@@ -250,7 +252,7 @@
                 gap: 1.5rem;
                 transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
                 border-left: 1px solid var(--glass-border);
-                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
             }
 
             .nav-links.active {
@@ -260,9 +262,11 @@
             .menu-toggle.active span:nth-child(1) {
                 transform: rotate(45deg) translate(5px, 5px);
             }
+
             .menu-toggle.active span:nth-child(2) {
                 opacity: 0;
             }
+
             .menu-toggle.active span:nth-child(3) {
                 transform: rotate(-45deg) translate(7px, -6px);
             }
@@ -286,7 +290,8 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem 0; /* Add padding for breathing room */
+            padding: 2rem 0;
+            /* Add padding for breathing room */
             position: relative;
             overflow: hidden;
             background-color: var(--bg-dark);
@@ -323,21 +328,21 @@
 
         .project-info-bar {
             background: var(--bg-dark);
-            padding: 2.5rem 0;
+            padding: 1.5rem 0;
             text-align: center;
             border-bottom: 1px solid var(--glass-border);
             position: relative;
-            z-index: 10;
+            z-index: 1002;
         }
 
         .project-info-text {
             display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.2);
+            padding: 0.4rem 1.2rem;
+            background: rgba(251, 191, 36, 0.05);
+            border: 1px solid rgba(251, 191, 36, 0.1);
             border-radius: 100px;
             color: var(--primary);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -781,8 +786,10 @@
 
             .hero {
                 height: auto;
-                padding: 0; /* Remove padding to keep strict 16:9 */
+                padding: 0;
+                /* Remove padding to keep strict 16:9 */
             }
+
             .hero-bg {
                 animation: none;
                 /* Disable animation to stop extra zooming */
@@ -809,6 +816,12 @@
 
     <div id="scroll-progress"></div>
 
+    <div class="project-info-bar">
+        <div class="container">
+            <div class="project-info-text fade-in">ATL LAB Innovation Project 2026 | VISION TEAM</div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="menu-toggle" id="mobile-menu">
@@ -834,11 +847,7 @@
         <div class="hero-overlay"></div>
     </section>
 
-    <div class="project-info-bar">
-        <div class="container">
-            <div class="project-info-text fade-in">ATL LAB Innovation Project 2026 | VISION TEAM</div>
-        </div>
-    </div>
+
 
     <!-- Team Section -->
     <section id="team">
@@ -856,9 +865,9 @@
                     <p class="bio">Leading the innovation journey and architecting the core logic of the project.</p>
                 </div>
                 <div class="team-card fade-in glow-card">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200"
-                        alt="Ashish" class="profile-pic">
-                    <h3>Ashish</h3>
+                    <img src="https://i.ibb.co/nNvy8sym/ceeffc3a-bd76-4672-9adb-14e3884ec797.jpg" alt="ASHISH JAISWAL"
+                        class="profile-pic">
+                    <h3>ASHISH JAISWAL</h3>
                     <p class="role">Design Lead</p>
                     <p class="bio">Crafting beautiful user interfaces and ensuring premium project aesthetics.</p>
                 </div>
