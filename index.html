@@ -694,7 +694,10 @@
 
             .hero-bg {
                 background-position: center;
-                /* Ensures center of the "movie poster" is visible */
+                animation: slow-zoom 30s ease-in-out infinite alternate;
+                /* Slower, subtle zoom */
+                transform: scale(1.02);
+                /* Less initial zoom */
             }
 
             .about-grid {
@@ -709,7 +712,15 @@
 
         @media (max-width: 480px) {
             .hero {
-                min-height: 70vh;
+                min-height: 60vh;
+                /* Reduced height for better framing */
+            }
+
+            .hero-bg {
+                animation: none;
+                /* Disable animation to stop extra zooming */
+                background-position: center center;
+                background-size: cover;
             }
 
             .hero-content h1 {
@@ -755,9 +766,6 @@
         <div class="hero-overlay"></div>
         <div class="container hero-content">
             <div class="hero-badge fade-in">ATL LAB Innovation Project 2026 | VISION TEAM</div>
-            <h1 class="fade-in"><span class="gradient-text">ATL LAB</span><br>Innovation Project</h1>
-            <p class="hero-tagline fade-in">Exploring the boundaries of technology and creativity to build solutions for
-                a better tomorrow.</p>
             <div class="btn-group fade-in">
                 <a href="#team" class="btn-primary">
                     <span>Meet the Team</span>
