@@ -327,6 +327,51 @@
             z-index: 1;
         }
 
+        /* Hero Nav Buttons */
+        .hero-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+            opacity: 0; /* Hidden by default */
+        }
+
+        .hero:hover .hero-nav {
+            opacity: 1; /* Show on hover */
+        }
+
+        .hero-nav:hover {
+            background: var(--primary);
+            color: black;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .hero-nav-prev { left: 30px; }
+        .hero-nav-next { right: 30px; }
+
+        @media (max-width: 768px) {
+            .hero-nav {
+                opacity: 1; /* Always show on mobile */
+                width: 40px;
+                height: 40px;
+            }
+            .hero-nav-prev { left: 10px; }
+            .hero-nav-next { right: 10px; }
+        }
+
         .project-info-bar {
             background: var(--bg-dark);
             padding: 1.5rem 0;
@@ -825,6 +870,12 @@
     <section id="home" class="hero">
         <div id="hero-slides"></div>
         <div class="hero-overlay"></div>
+        <div class="hero-nav hero-nav-prev" id="prev-slide">
+            <i data-lucide="chevron-left"></i>
+        </div>
+        <div class="hero-nav hero-nav-next" id="next-slide">
+            <i data-lucide="chevron-right"></i>
+        </div>
     </section>
 
 
@@ -1015,48 +1066,52 @@
         ];
 
         let currentIndex = 0;
+        let slideInterval;
 
-        // Initialize first slide
-        if (heroSlides) {
-            heroSlides.innerHTML = `<div class="hero-bg active" style="background-image: url('${images[0]}');"></div>`;
+        function showSlide(index) {
+            currentIndex = (index + images.length) % images.length;
+            
+            const slide = document.createElement('div');
+            slide.className = 'hero-bg active';
+            slide.style.backgroundImage = `url('${images[currentIndex]}')`;
+            
+            heroSlides.appendChild(slide);
+            
+            if (heroSlides.children.length > 1) {
+                const oldSlide = heroSlides.children[0];
+                setTimeout(() => {
+                    if (oldSlide.parentNode) oldSlide.remove();
+                }, 1500);
+            }
         }
 
-        // Preload images
-        images.forEach(src => {
-            const img = new Image();
-            img.src = src;
+        function startSlideshow() {
+            if (images.length > 1) {
+                slideInterval = setInterval(() => showSlide(currentIndex + 1), 5000);
+            }
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startSlideshow();
+        }
+
+        // Initialize
+        if (heroSlides) {
+            showSlide(0);
+            startSlideshow();
+        }
+
+        // Manual Navigation
+        document.getElementById('prev-slide').addEventListener('click', () => {
+            showSlide(currentIndex - 1);
+            resetInterval();
         });
 
-        function nextSlide() {
-            const nextIndex = (currentIndex + 1) % images.length;
-
-            // Create next slide element
-            const slide = document.createElement('div');
-            slide.className = 'hero-bg';
-            slide.style.backgroundImage = `url('${images[nextIndex]}')`;
-
-            heroSlides.appendChild(slide);
-
-            // Force reflow
-            slide.offsetHeight;
-
-            // Activate next slide
-            slide.classList.add('active');
-
-            // Remove previous slide after transition
-            const prevSlide = heroSlides.children[0];
-            setTimeout(() => {
-                if (heroSlides.children.length > 1) {
-                    heroSlides.removeChild(prevSlide);
-                }
-            }, 1500);
-
-            currentIndex = nextIndex;
-        }
-
-        if (images.length > 1) {
-            setInterval(nextSlide, 5000); // Change every 5 seconds
-        }
+        document.getElementById('next-slide').addEventListener('click', () => {
+            showSlide(currentIndex + 1);
+            resetInterval();
+        });
 
         // --- Menu Toggle Logic ---
         const menuToggle = document.getElementById('mobile-menu');
