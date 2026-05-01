@@ -228,14 +228,16 @@
         }
 
         .hero {
-            min-height: 100vh;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding-top: 100px;
+            padding: 2rem 0; /* Add padding for breathing room */
             position: relative;
             overflow: hidden;
+            background-color: var(--bg-dark);
         }
 
         .hero-bg {
@@ -682,12 +684,6 @@
         }
 
         @media (max-width: 768px) {
-            .hero {
-                min-height: 80vh;
-                /* Shorter for better mobile framing */
-                padding-top: 80px;
-            }
-
             .hero-content h1 {
                 font-size: 3rem;
             }
@@ -711,11 +707,6 @@
         }
 
         @media (max-width: 480px) {
-            .hero {
-                min-height: 60vh;
-                /* Reduced height for better framing */
-            }
-
             .hero-bg {
                 animation: none;
                 /* Disable animation to stop extra zooming */
