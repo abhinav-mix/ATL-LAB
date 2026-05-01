@@ -4,7 +4,7 @@
 // Add your hero section background image links here
 const heroImages = [
     'https://i.ibb.co/SgFSKYy/IMG-20250809-140920-jpg.jpg',
-    'https://i.ibb.co/MkqWVdvs/2ab09e3f-4e8b-4826-95d3-c3dc8f9d94b7.jpg',
+    'https://i.ibb.co/v4RSQphm/866bfa62-570c-4c70-92f6-f9be8de1e822.jpg',
     'atl_lab_hero_bg_3.png',
     'atl_lab_hero_bg_4.png',
     'atl_lab_hero_bg_5.png'
