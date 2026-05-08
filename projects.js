@@ -5,9 +5,12 @@
 const heroImages = [
     'https://i.ibb.co/SgFSKYy/IMG-20250809-140920-jpg.jpg',
     'https://i.ibb.co/v4RSQphm/866bfa62-570c-4c70-92f6-f9be8de1e822.jpg',
-    'atl_lab_hero_bg_3.png',
-    'atl_lab_hero_bg_4.png',
-    'atl_lab_hero_bg_5.png'
+    'https://i.ibb.co/yBXc5GR4/file-000000004cbc71faa16f0ad587980838.png',
+    'https://i.ibb.co/DPPhMTvm/IMG-20260506-133142221-HDR.jpg',
+    'https://i.ibb.co/Pz0QCWL5/IMG-20260506-132242175-HDR.jpg',
+    'https://i.ibb.co/RG2kkTyr/IMG-20260507-132415980-HDR.jpg',
+    'https://i.ibb.co/NgyYHxCt/IMG-20260506-131553750-HDR.jpg',
+    'https://i.ibb.co/zWGkqmXh/IMG-20260506-133710054-HDR.jpg',
 ];
 
 const projects = [
