@@ -20,25 +20,26 @@
     <meta property="twitter:title" content="ATL LAB Innovation Project | VISION TEAM">
     <meta property="twitter:description" content="Official website of VISION TEAM - Innovation for a better tomorrow.">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --primary: #fbbf24;
-            /* Golden */
-            --secondary: #fef3c7;
-            /* Light Gold */
-            --accent: #d97706;
-            /* Amber */
-            --bg-dark: #000000;
-            /* Pure Black */
-            --bg-card: rgba(20, 20, 20, 0.8);
-            --text-main: #ffffff;
-            --text-dim: #a1a1aa;
-            --glass-border: rgba(251, 191, 36, 0.2);
-            --glow: 0 0 35px rgba(251, 191, 36, 0.2);
-            --gradient: linear-gradient(135deg, var(--primary), var(--accent));
+            --primary: #fbbf24;        /* Gold */
+            --secondary: #f59e0b;      /* Amber */
+            --accent: #10b981;         /* Emerald accent */
+            --accent-red: #ef4444;     /* Alert red */
+            --bg-dark: #030712;        /* Near-black */
+            --bg-mid:  #0a0f1e;        /* Mid dark */
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --text-main: #f1f5f9;
+            --text-dim:  #64748b;
+            --glass-border: rgba(251, 191, 36, 0.18);
+            --glow: 0 0 40px rgba(251, 191, 36, 0.15);
+            --gradient: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
         }
 
         * {
@@ -52,14 +53,15 @@
             font-family: 'Outfit', sans-serif;
             background-color: var(--bg-dark);
             background-image:
-                radial-gradient(circle at 0% 0%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, rgba(217, 119, 6, 0.1) 0%, transparent 50%);
+                radial-gradient(ellipse at 10% 0%,  rgba(251,191,36,0.07)  0%, transparent 55%),
+                radial-gradient(ellipse at 90% 90%, rgba(16,185,129,0.05)   0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(15,23,42,0.9)      0%, transparent 100%);
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
-        /* --- Preloader --- */
+        /* --- Upgraded Telemetry Preloader --- */
         #preloader {
             position: fixed;
             top: 0;
@@ -68,30 +70,80 @@
             height: 100%;
             background: var(--bg-dark);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(251, 191, 36, 0.2);
-            border-top: 3px solid var(--primary);
+        .preloader-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .loader-pulse {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            background: rgba(251, 191, 36, 0.05);
+            border: 2px dashed var(--primary);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+            animation: rotate-pulse 4s linear infinite;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
+        @keyframes rotate-pulse {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); box-shadow: 0 0 30px rgba(251, 191, 36, 0.4); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
 
-            100% {
-                transform: rotate(360deg);
-            }
+        .boot-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 5px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+            text-transform: uppercase;
+        }
+
+        .boot-text {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            min-height: 20px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(251, 191, 36, 0.1);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            box-shadow: 0 0 15px var(--primary);
+            transition: width 0.1s ease-out;
+        }
+
+        .boot-percentage {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
         }
 
         /* --- Scroll Progress --- */
@@ -152,40 +204,40 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(251, 191, 36, 0.12) 0%, transparent 55%);
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.4s ease;
             pointer-events: none;
+            z-index: 0;
         }
 
         .glow-card:hover::before {
             opacity: 1;
         }
+        .glow-card > * { position: relative; z-index: 1; }
 
-        /* --- Navbar Upgrade --- */
+        /* --- Navbar Premium --- */
         nav {
             position: fixed;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 1.5rem 4rem;
+            padding: 1.2rem 3rem;
             background: transparent;
             backdrop-filter: none;
             z-index: 1000;
-            border-radius: 0;
-            border: none;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
         }
 
         nav.scrolled {
-            top: 0;
-            width: 100%;
-            border-radius: 0;
-            background: transparent;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(251,191,36,0.12);
+            padding: 0.9rem 3rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.4);
         }
 
         .logo {
@@ -216,16 +268,17 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-main);
+            color: rgba(241,245,249,0.75);
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
             transition: all 0.3s;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.1rem;
             border-radius: 50px;
         }
 
         .nav-links a:hover {
-            background: rgba(139, 92, 246, 0.1);
+            background: rgba(251,191,36,0.1);
             color: var(--primary);
         }
 
@@ -452,22 +505,26 @@
         }
 
         .btn-primary {
-            padding: 1.2rem 2.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            padding: 1rem 2.2rem;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #030712;
             text-decoration: none;
             border-radius: 100px;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 8px 25px rgba(251,191,36,0.35);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 16px 40px rgba(251,191,36,0.5);
         }
 
         /* --- Stats Section --- */
@@ -501,23 +558,28 @@
             letter-spacing: 1px;
         }
 
-        /* --- About Section --- */
+        /* --- Section Titles (Global Upgrade) --- */
         .section-title {
             text-align: center;
             margin-bottom: 4rem;
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -1px;
             margin-bottom: 1rem;
         }
 
         .section-title .underline {
-            width: 60px;
-            height: 4px;
+            width: 50px;
+            height: 3px;
             background: var(--gradient);
             margin: 0 auto;
             border-radius: 2px;
+            box-shadow: 0 0 12px rgba(251,191,36,0.5);
         }
 
         .about-grid {
@@ -541,7 +603,7 @@
             text-align: center;
         }
 
-        /* --- Team Section --- */
+        /* --- Team Cards --- */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -549,22 +611,23 @@
         }
 
         .team-card {
-            background: var(--bg-card);
+            background: rgba(15,23,42,0.6);
             padding: 2.5rem 1.5rem;
-            border-radius: 24px;
+            border-radius: var(--radius-xl);
             text-align: center;
-            border: 1px solid var(--glass-border);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+            backdrop-filter: blur(12px);
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .team-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--secondary);
-            background: rgba(30, 41, 59, 0.9);
+            transform: translateY(-12px);
+            border-color: rgba(251,191,36,0.3);
+            background: rgba(15,23,42,0.9);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(251,191,36,0.1);
         }
 
         .profile-pic {
@@ -573,77 +636,84 @@
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 1.5rem;
-            border: 3px solid var(--secondary);
+            border: 3px solid rgba(251,191,36,0.5);
             padding: 3px;
             background: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(251,191,36,0.2);
         }
 
         .team-card h3 {
             margin-bottom: 0.25rem;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.3px;
         }
 
         .team-card p.role {
-            color: var(--secondary);
-            font-weight: 600;
-            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.75rem;
             text-transform: uppercase;
             margin-bottom: 1rem;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         .team-card p.bio {
             color: var(--text-dim);
-            font-size: 0.85rem;
-            line-height: 1.4;
+            font-size: 0.87rem;
+            line-height: 1.5;
         }
 
-        /* --- Numbered List Section --- */
+        /* --- Numbered Project Cards --- */
         .numbered-list {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .number-card {
-            background: var(--bg-card);
-            padding: 2rem;
-            border-radius: 24px;
-            border: 1px solid var(--glass-border);
+            background: rgba(15,23,42,0.55);
+            padding: 1.8rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255,255,255,0.06);
             display: flex;
-            gap: 2rem;
-            align-items: center;
-            transition: all 0.3s;
+            gap: 1.5rem;
+            align-items: flex-start;
+            transition: all 0.3s ease;
         }
 
         .number-card:hover {
-            border-color: var(--primary);
-            transform: scale(1.02);
-            box-shadow: var(--glow);
+            border-color: rgba(251,191,36,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+            background: rgba(15,23,42,0.85);
         }
 
         .number-tag {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            color: rgba(251, 191, 36, 0.15);
-            /* Subtle Gold */
-            font-family: 'Outfit', sans-serif;
+            color: rgba(251,191,36,0.2);
+            font-family: 'Space Grotesk', sans-serif;
             flex-shrink: 0;
             line-height: 1;
-            border-right: 2px solid rgba(251, 191, 36, 0.1);
-            padding-right: 1.5rem;
+            border-right: 2px solid rgba(251,191,36,0.1);
+            padding-right: 1.2rem;
+            min-width: 55px;
         }
 
         .number-content h3 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .number-content p {
             color: var(--text-dim);
-            font-size: 0.95rem;
+            font-size: 0.88rem;
+            line-height: 1.5;
         }
 
         /* --- Demo Section --- */
@@ -684,18 +754,20 @@
             transform: scale(1.1);
         }
 
-        /* --- Contact Section --- */
+        /* --- Contact & Footer --- */
         .contact {
             text-align: center;
-            background: rgba(30, 41, 59, 0.4);
+            background: rgba(10,15,30,0.5);
         }
 
         footer {
-            padding: 2rem 0;
+            padding: 3rem 0;
             text-align: center;
-            border-top: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255,255,255,0.05);
             color: var(--text-dim);
             font-size: 0.9rem;
+            background: rgba(3,7,18,0.8);
+            letter-spacing: 0.5px;
         }
 
         /* --- Modal Zoom --- */
@@ -839,13 +911,602 @@
                 font-size: 1rem;
             }
         }
+
+        /* --- Ambient Particles & Mouse Aura --- */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        #cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(251,191,36,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        /* --- Live IoT Simulator Dashboard CSS --- */
+        .sim-dashboard {
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--glow);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .sim-nav {
+            display: flex;
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.5rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sim-tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 1.2rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sim-tab:hover {
+            background: rgba(251, 191, 36, 0.05);
+            color: var(--text-main);
+        }
+
+        .sim-tab.active {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(217, 119, 6, 0.15));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
+        }
+
+        .sim-content {
+            padding: 2.5rem;
+        }
+
+        .sim-panel {
+            display: none;
+        }
+
+        .sim-panel.active {
+            display: block;
+            animation: fadeInSim 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInSim {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2.5rem;
+            align-items: stretch;
+        }
+
+        @media (max-width: 992px) {
+            .sim-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sim-visualizer {
+            background: #030712;
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            border-radius: 20px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sim-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            justify-content: space-between;
+        }
+
+        /* Stats Diagnostics */
+        .telemetry-panel h3, .sim-action-controls h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            border-left: 3px solid var(--primary);
+            padding-left: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .tel-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            transition: border-color 0.3s;
+        }
+
+        .tel-card:hover {
+            border-color: rgba(251, 191, 36, 0.15);
+        }
+
+        .tel-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tel-value {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            font-family: monospace;
+        }
+
+        .text-green { color: #10b981 !important; }
+        .text-orange { color: #f59e0b !important; }
+        .text-red { color: #ef4444 !important; }
+
+        .control-help {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        .btn-group-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-sim {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-sim:hover {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: var(--primary);
+        }
+
+        .btn-sim.active {
+            background: var(--primary);
+            color: black;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .btn-danger-sim:hover, .btn-danger-sim.active {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-success-sim:hover, .btn-success-sim.active {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Camera Feed (Eye Alert) styles */
+        .camera-feed-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .camera-feed {
+            flex: 1;
+            background: #090d16;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .face-mesh-overlay {
+            width: 250px;
+            height: 250px;
+            z-index: 2;
+        }
+
+        .face-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .camera-status-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--primary);
+            padding: 0.3rem 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 50px;
+            letter-spacing: 1px;
+            font-family: monospace;
+            z-index: 3;
+        }
+
+        .camera-alert-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(239, 68, 68, 0.3);
+            border: 4px solid #ef4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .camera-alert-overlay.alerting {
+            opacity: 1;
+            animation: alertFlash 1s steps(2) infinite;
+        }
+
+        @keyframes alertFlash {
+            0% { background: rgba(239, 68, 68, 0.1); }
+            50% { background: rgba(239, 68, 68, 0.4); }
+        }
+
+        .alert-pulse-box {
+            background: #000;
+            border: 2px solid #ef4444;
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 0 30px #ef4444;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert-icon-shake {
+            color: #ef4444;
+            animation: shake 0.5s ease infinite;
+            width: 36px;
+            height: 36px;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0); }
+            20% { transform: rotate(-10deg); }
+            40% { transform: rotate(10deg); }
+            60% { transform: rotate(-10deg); }
+            80% { transform: rotate(10deg); }
+        }
+
+        .alert-pulse-box span {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .alert-pulse-box p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+
+        .telemetry-sparklines {
+            height: 70px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(10, 10, 10, 0.9);
+            padding: 0.5rem 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .sparkline-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .spark-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        .spark-svg {
+            flex: 1;
+            height: 35px;
+        }
+
+        /* Bins (Smart Waste) styles */
+        .bins-container {
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            gap: 1.5rem;
+        }
+
+        .bin-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .bin-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .bin-graphic-wrapper {
+            width: 65px;
+            height: 160px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bin-lid {
+            width: 75px;
+            height: 10px;
+            background: #334155;
+            border-radius: 4px 4px 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-origin: bottom left;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+        }
+
+        .bin-graphic-wrapper:hover .bin-lid {
+            transform: rotate(-35deg);
+        }
+
+        .bin-body {
+            flex: 1;
+            width: 100%;
+            background: #1e293b;
+            border: 2px solid #475569;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+        }
+
+        .bin-fill {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 0.5rem;
+        }
+
+        .bin-percent-tag {
+            font-family: monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: black;
+            background: rgba(255,255,255,0.8);
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+        .fill-green {
+            background: linear-gradient(180deg, #10b981, #047857);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .fill-orange {
+            background: linear-gradient(180deg, #f59e0b, #b45309);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .fill-red {
+            background: linear-gradient(180deg, #ef4444, #b91c1c);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .bin-status {
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: monospace;
+            text-transform: uppercase;
+        }
+
+        /* Solar Tracker styles */
+        .solar-tracker-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: radial-gradient(circle at center, #0c1524 0%, #030712 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sim-sun {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            left: 50%;
+            top: 40px;
+            transform: translate(-50%, -50%);
+            user-select: none;
+        }
+
+        .sim-sun:active {
+            cursor: grabbing;
+        }
+
+        .sun-icon-glowing {
+            color: #f59e0b;
+            filter: drop-shadow(0 0 15px #f59e0b);
+            width: 32px;
+            height: 32px;
+            animation: spin 15s linear infinite;
+        }
+
+        .tracker-pivot-station {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-top: 3rem;
+        }
+
+        .tracker-panel-graphic {
+            width: 130px;
+            height: 80px;
+            background: #1e3a8a;
+            border: 3px solid #3b82f6;
+            border-radius: 8px;
+            padding: 4px;
+            transform-origin: center center;
+            transform: rotate(0deg);
+            transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .solar-cell-grid {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+        }
+
+        .cell {
+            background: rgba(30, 58, 138, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .cell::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .tracker-stand {
+            width: 12px;
+            height: 80px;
+            background: linear-gradient(90deg, #475569, #334155, #1e293b);
+            border-radius: 0 0 4px 4px;
+        }
+
+        .solar-help-label {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            font-weight: 500;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+    <canvas id="particles-canvas"></canvas>
+    <div id="cursor-glow"></div>
     <div id="preloader">
-        <div class="loader"></div>
-        <p style="margin-top: 1rem; color: var(--primary); font-weight: 600; letter-spacing: 2px;">ATL LAB</p>
+        <div class="preloader-content">
+            <div class="loader-pulse"></div>
+            <div class="boot-logo">VISION TEAM</div>
+            <div class="boot-text" id="boot-text">INITIALIZING SYSTEMS...</div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+            <div class="boot-percentage" id="boot-percentage">0%</div>
+        </div>
     </div>
 
     <div id="scroll-progress"></div>
@@ -860,6 +1521,13 @@
 
     <!-- Navigation -->
     <nav id="navbar">
+        <!-- Logo -->
+        <a href="#home" style="text-decoration:none; display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                <i data-lucide="zap" color="#030712" style="width:20px;height:20px;"></i>
+            </div>
+            <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#f1f5f9;letter-spacing:-0.5px;">VISION<span style="color:#fbbf24;">TEAM</span></span>
+        </a>
         <div class="menu-toggle" id="mobile-menu">
             <span></span>
             <span></span>
@@ -868,23 +1536,38 @@
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#team">Team</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#demo">Demo</a></li>
-            <li><a href="#project">Project</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#accident-alert-showcase">Eye Alert</a></li>
+            <li><a href="#smart-waste-showcase">Waste Hub</a></li>
+            <li><a href="#demo">Simulator</a></li>
+            <li><a href="#project">Projects</a></li>
+            <li><a href="#contact" style="background:rgba(251,191,36,0.15);color:var(--primary);border:1px solid rgba(251,191,36,0.3);border-radius:50px;">Contact</a></li>
         </ul>
     </nav>
 
     <!-- Hero Section -->
-    <!-- ... (Hero remains same) ... -->
     <section id="home" class="hero">
         <div id="hero-slides"></div>
-        <div class="hero-overlay"></div>
+        <div class="hero-overlay" style="background:linear-gradient(to bottom, rgba(3,7,18,0.3) 0%, rgba(3,7,18,0.6) 100%);"></div>
         <div class="hero-nav hero-nav-prev" id="prev-slide">
             <i data-lucide="chevron-left"></i>
         </div>
         <div class="hero-nav hero-nav-next" id="next-slide">
             <i data-lucide="chevron-right"></i>
+        </div>
+        <!-- Hero Content Overlay -->
+        <div style="position:absolute;bottom:0;left:0;width:100%;padding:3rem 4rem;z-index:5;background:linear-gradient(to top,rgba(3,7,18,0.95) 0%,transparent 100%);">
+            <div style="max-width:900px;">
+                <div style="display:inline-flex;align-items:center;gap:0.6rem;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.3);border-radius:50px;padding:0.4rem 1rem;margin-bottom:1.2rem;">
+                    <span style="width:8px;height:8px;background:#10b981;border-radius:50%;box-shadow:0 0 8px #10b981;display:inline-block;animation:pulse 1.5s infinite;"></span>
+                    <span style="font-family:monospace;font-size:0.78rem;color:var(--primary);letter-spacing:1px;">ATL LAB INNOVATION PROJECT 2026–27</span>
+                </div>
+                <h1 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:700;color:#f1f5f9;line-height:1.15;margin-bottom:1rem;">VISION TEAM — <br><span style="background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Building Solutions</span> for Tomorrow</h1>
+                <p style="color:#94a3b8;font-size:1.05rem;max-width:550px;margin-bottom:1.8rem;">Driver Safety · Intelligent Waste Management · AI Solar Tracking — real IoT solutions built by students.</p>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                    <a href="#accident-alert-showcase" class="btn-primary"><i data-lucide="zap" style="width:18px;height:18px;"></i><span>Explore Projects</span></a>
+                    <a href="#demo" style="display:inline-flex;align-items:center;gap:0.5rem;padding:1rem 2rem;border:1px solid rgba(255,255,255,0.15);border-radius:100px;color:#f1f5f9;text-decoration:none;font-weight:600;font-size:0.95rem;backdrop-filter:blur(10px);transition:all 0.3s;" onmouseover="this.style.borderColor='rgba(251,191,36,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'"><i data-lucide="play-circle" style="width:18px;height:18px;"></i><span>Live Demo</span></a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -955,6 +1638,1181 @@
         </div>
     </section>
 
+    <!-- ===== ACCIDENT ALERT SYSTEM SHOWCASE ===== -->
+    <section id="accident-alert-showcase">
+        <style>
+            /* ---------- Accident Alert System Layout ---------- */
+            .aas-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.15fr;
+                gap: 4rem;
+                align-items: start;
+                margin-top: 3rem;
+            }
+            @media (max-width: 900px) {
+                .aas-grid { grid-template-columns: 1fr; }
+            }
+
+            /* ---- Feature Cards (left column) ---- */
+            .aas-feature-card {
+                background: rgba(15,23,42,0.5);
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 18px;
+                padding: 1.8rem;
+                margin-bottom: 1.4rem;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+            .aas-feature-card::before {
+                content: '';
+                position: absolute;
+                left: 0; top: 0; bottom: 0;
+                width: 4px;
+                border-radius: 2px;
+                background: linear-gradient(180deg, #ef4444, #fbbf24);
+            }
+            .aas-feature-card:hover {
+                background: rgba(15,23,42,0.9);
+                border-color: rgba(239,68,68,0.35);
+                transform: translateX(8px);
+            }
+            .aas-feature-header {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 0.9rem;
+            }
+            .aas-icon {
+                background: rgba(239,68,68,0.12);
+                color: #ef4444;
+                width: 48px; height: 48px;
+                border-radius: 12px;
+                display: flex; align-items: center; justify-content: center;
+                flex-shrink: 0;
+            }
+            .aas-feature-header h3 {
+                margin: 0;
+                font-size: 1.12rem;
+                color: var(--text-main);
+            }
+            .aas-feature-card p {
+                margin: 0;
+                color: var(--text-dim);
+                line-height: 1.75;
+                font-size: 0.96rem;
+            }
+            .aas-tag-row {
+                display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.9rem;
+            }
+            .aas-tag {
+                padding: 0.3rem 0.85rem;
+                border-radius: 50px;
+                font-size: 0.78rem;
+                font-weight: 700;
+                font-family: monospace;
+                background: rgba(239,68,68,0.1);
+                color: #ef4444;
+                border: 1px solid rgba(239,68,68,0.25);
+            }
+            .aas-tag.gold {
+                background: rgba(251,191,36,0.1);
+                color: var(--primary);
+                border-color: rgba(251,191,36,0.3);
+            }
+            .aas-tag.green {
+                background: rgba(16,185,129,0.1);
+                color: #10b981;
+                border-color: rgba(16,185,129,0.25);
+            }
+
+            /* ---- Right-side Device Mockup ---- */
+            .aas-device-wrap {
+                position: sticky;
+                top: 110px;
+            }
+            .aas-device-card {
+                background: rgba(10,15,30,0.75);
+                border: 1px solid var(--glass-border);
+                border-radius: 24px;
+                padding: 2rem;
+                backdrop-filter: blur(20px);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+                position: relative;
+                overflow: hidden;
+            }
+            .aas-device-card::before {
+                content:'';
+                position:absolute;
+                top:0;left:0;width:100%;height:4px;
+                background: linear-gradient(90deg, #ef4444, #fbbf24);
+            }
+            .aas-device-title {
+                font-family: monospace;
+                color: #ef4444;
+                font-size: 0.82rem;
+                letter-spacing: 2px;
+                margin-bottom: 1.5rem;
+                display: flex; align-items: center; gap: 0.6rem;
+            }
+            .aas-device-title::before {
+                content:'';
+                width: 8px; height: 8px;
+                background: #ef4444;
+                border-radius: 50%;
+                display: inline-block;
+                box-shadow: 0 0 10px #ef4444;
+                animation: pulse 1s infinite;
+            }
+
+            /* Sensor readings row */
+            .sensor-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+                margin-bottom: 1.5rem;
+            }
+            .sensor-card {
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.07);
+                border-radius: 12px;
+                padding: 1rem;
+                text-align: center;
+            }
+            .sensor-val {
+                font-size: 1.6rem;
+                font-weight: bold;
+                font-family: monospace;
+            }
+            .sensor-lbl {
+                font-size: 0.68rem;
+                color: var(--text-dim);
+                margin-top: 4px;
+                letter-spacing: 1px;
+            }
+
+            /* Protocol steps */
+            .protocol-steps {
+                margin-top: 0.5rem;
+            }
+            .pstep {
+                display: flex;
+                gap: 1rem;
+                align-items: flex-start;
+                margin-bottom: 0.8rem;
+            }
+            .pstep-num {
+                background: rgba(239,68,68,0.15);
+                color: #ef4444;
+                border: 1px solid rgba(239,68,68,0.3);
+                font-weight: bold;
+                font-family: monospace;
+                font-size: 0.75rem;
+                width: 28px; height: 28px;
+                border-radius: 50%;
+                display: flex; align-items: center; justify-content: center;
+                flex-shrink: 0;
+            }
+            .pstep-text {
+                font-size: 0.85rem;
+                color: var(--text-dim);
+                line-height: 1.5;
+                padding-top: 4px;
+            }
+            .pstep-text strong { color: var(--text-main); }
+            .pstep-connector {
+                width: 2px;
+                height: 14px;
+                background: rgba(239,68,68,0.25);
+                margin-left: 13px;
+                margin-top: -4px;
+                margin-bottom: -4px;
+            }
+
+            /* SMS / Call badges */
+            .alert-badges {
+                display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem;
+            }
+            .alert-badge {
+                background: rgba(239,68,68,0.1);
+                border: 1px solid rgba(239,68,68,0.3);
+                color: #ef4444;
+                border-radius: 10px;
+                padding: 0.75rem 1rem;
+                font-size: 0.82rem;
+                font-family: monospace;
+                display: flex; align-items: center; gap: 0.5rem;
+                flex: 1;
+            }
+            .alert-badge.sms { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.3); color: var(--primary); }
+            .alert-badge.gps { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.25); color: #10b981; }
+        </style>
+
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Accident Alert System</h2>
+                <div class="underline"></div>
+                <p class="section-subtitle">
+                    A multi-layered, AI + sensor fusion safety platform that detects driver drowsiness and crashes — then triggers a fully automated emergency response without any human input.
+                </p>
+            </div>
+
+            <div class="aas-grid">
+
+                <!-- LEFT: Feature Cards -->
+                <div class="fade-in">
+
+                    <div class="aas-feature-card glow-card">
+                        <div class="aas-feature-header">
+                            <div class="aas-icon"><i data-lucide="eye" size="24"></i></div>
+                            <h3>AI Drowsiness Detection (EAR)</h3>
+                        </div>
+                        <p>The app uses <strong>Google ML Kit Face Mesh</strong> to track 468 facial landmarks in real-time at 30 FPS. It constantly computes the <strong>Eye Aspect Ratio (EAR)</strong> — the ratio of eye height to width. When EAR drops below <strong>0.25 for ≥ 2 seconds</strong>, micro-sleep is confirmed and an alarm is blasted instantly.</p>
+                        <div class="aas-tag-row">
+                            <span class="aas-tag gold">ML Kit Face Mesh</span>
+                            <span class="aas-tag green">EAR &lt; 0.25 Threshold</span>
+                            <span class="aas-tag">30 FPS Processing</span>
+                        </div>
+                    </div>
+
+                    <div class="aas-feature-card glow-card">
+                        <div class="aas-feature-header">
+                            <div class="aas-icon"><i data-lucide="activity" size="24"></i></div>
+                            <h3>IMU Crash Detection (Accelerometer + Gyroscope)</h3>
+                        </div>
+                        <p>The phone's <strong>accelerometer</strong> monitors all 3 axes (X, Y, Z) for sudden G-force spikes. A crash is detected when the net acceleration exceeds <strong>2.5G</strong>. The <strong>gyroscope</strong> simultaneously checks for abnormal vehicle roll/pitch angles. Both sensors must agree before an emergency is triggered — eliminating false alarms from speed bumps.</p>
+                        <div class="aas-tag-row">
+                            <span class="aas-tag">Accelerometer XYZ</span>
+                            <span class="aas-tag">Gyroscope 3-Axis</span>
+                            <span class="aas-tag gold">2.5G Threshold</span>
+                            <span class="aas-tag green">Dual Confirmation</span>
+                        </div>
+                    </div>
+
+                    <div class="aas-feature-card glow-card">
+                        <div class="aas-feature-header">
+                            <div class="aas-icon"><i data-lucide="timer" size="24"></i></div>
+                            <h3>Configurable Safety Countdown</h3>
+                        </div>
+                        <p>After a crash is detected, a <strong>customizable countdown (10–30 seconds)</strong> begins with a loud alarm. The driver can cancel it if the detection was a false positive. If nobody cancels it, the system assumes the driver is incapacitated and automatically escalates to the full SOS protocol.</p>
+                        <div class="aas-tag-row">
+                            <span class="aas-tag gold">10–30s Configurable</span>
+                            <span class="aas-tag green">Driver Can Cancel</span>
+                            <span class="aas-tag">Auto-Escalation</span>
+                        </div>
+                    </div>
+
+                    <div class="aas-feature-card glow-card">
+                        <div class="aas-feature-header">
+                            <div class="aas-icon"><i data-lucide="phone-call" size="24"></i></div>
+                            <h3>Automated Emergency Call + Loudspeaker Broadcast</h3>
+                        </div>
+                        <p>The app automatically dials the pre-configured <strong>emergency contact</strong> using Android's telephony API — no user interaction needed. Simultaneously, it plays a <strong>custom SOS audio message</strong> on the device loudspeaker at maximum volume, identifying the driver and their location to anyone nearby.</p>
+                        <div class="aas-tag-row">
+                            <span class="aas-tag">Auto Phone Call</span>
+                            <span class="aas-tag">Loudspeaker SOS Audio</span>
+                            <span class="aas-tag gold">No Input Required</span>
+                        </div>
+                    </div>
+
+                    <div class="aas-feature-card glow-card">
+                        <div class="aas-feature-header">
+                            <div class="aas-icon"><i data-lucide="message-square" size="24"></i></div>
+                            <h3>GPS SMS Alert to All Emergency Contacts</h3>
+                        </div>
+                        <p>Simultaneously with the call, the app sends an <strong>automated SMS</strong> to all registered emergency contacts. The message includes the driver's name, a live <strong>Google Maps link</strong> with GPS coordinates, the crash timestamp, and the detected impact magnitude — so responders know exactly where to go.</p>
+                        <div class="aas-tag-row">
+                            <span class="aas-tag">Multi-Contact SMS</span>
+                            <span class="aas-tag gold">Live GPS Link</span>
+                            <span class="aas-tag green">Google Maps URL</span>
+                            <span class="aas-tag">Impact Data</span>
+                        </div>
+                    </div>
+
+                    <div class="aas-feature-card glow-card">
+                        <div class="aas-feature-header">
+                            <div class="aas-icon"><i data-lucide="video" size="24"></i></div>
+                            <h3>Smart Dashcam (Pre-Crash Buffer)</h3>
+                        </div>
+                        <p>The app continuously records a <strong>rolling 30-second video buffer</strong> using the front camera. At the moment of crash detection, the last 30 seconds of footage is saved to local storage automatically. This <strong>pre-crash video</strong> serves as critical accident evidence for police and insurance claims.</p>
+                        <div class="aas-tag-row">
+                            <span class="aas-tag">30s Rolling Buffer</span>
+                            <span class="aas-tag gold">Auto-Save on Crash</span>
+                            <span class="aas-tag green">Evidence Recording</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT: Live Device Mockup -->
+                <div class="aas-device-wrap fade-in">
+                    <div class="aas-device-card glow-card">
+                        <div class="aas-device-title">
+                            <i data-lucide="siren" size="14"></i> ACCIDENT ALERT — SYSTEM STATUS
+                        </div>
+
+                        <!-- Live Sensor Readings -->
+                        <div class="sensor-row">
+                            <div class="sensor-card">
+                                <div class="sensor-val" style="color:#ef4444;">0.18</div>
+                                <div class="sensor-lbl">EAR (DROWSY!)</div>
+                            </div>
+                            <div class="sensor-card">
+                                <div class="sensor-val" style="color:#ef4444;">3.1G</div>
+                                <div class="sensor-lbl">IMPACT G-FORCE</div>
+                            </div>
+                            <div class="sensor-card">
+                                <div class="sensor-val" style="color:#f59e0b;">42°</div>
+                                <div class="sensor-lbl">VEHICLE ROLL</div>
+                            </div>
+                            <div class="sensor-card">
+                                <div class="sensor-val" style="color:#10b981;">GPS ✓</div>
+                                <div class="sensor-lbl">LOCATION LOCKED</div>
+                            </div>
+                        </div>
+
+                        <!-- Protocol Steps -->
+                        <div style="font-size:0.75rem;color:var(--text-dim);font-family:monospace;letter-spacing:1px;margin-bottom:1rem;">▶ EMERGENCY PROTOCOL — EXECUTING</div>
+                        <div class="protocol-steps">
+                            <div class="pstep">
+                                <div class="pstep-num">1</div>
+                                <div class="pstep-text"><strong>Crash Detected</strong> — 3.1G impact + 42° roll confirmed</div>
+                            </div>
+                            <div class="pstep-connector"></div>
+                            <div class="pstep">
+                                <div class="pstep-num">2</div>
+                                <div class="pstep-text"><strong>Alarm Triggered</strong> — 15s countdown started, driver unresponsive</div>
+                            </div>
+                            <div class="pstep-connector"></div>
+                            <div class="pstep">
+                                <div class="pstep-num">3</div>
+                                <div class="pstep-text"><strong>Dashcam Saved</strong> — Last 30s video written to storage</div>
+                            </div>
+                            <div class="pstep-connector"></div>
+                            <div class="pstep">
+                                <div class="pstep-num">4</div>
+                                <div class="pstep-text"><strong>Auto-Call Placed</strong> — Dialling emergency contact via loudspeaker</div>
+                            </div>
+                            <div class="pstep-connector"></div>
+                            <div class="pstep">
+                                <div class="pstep-num">5</div>
+                                <div class="pstep-text"><strong>SMS Dispatched</strong> — GPS link sent to all contacts</div>
+                            </div>
+                        </div>
+
+                        <!-- Alert Badges -->
+                        <div class="alert-badges">
+                            <div class="alert-badge">
+                                <i data-lucide="phone-call" size="14"></i> Auto-Call Active
+                            </div>
+                            <div class="alert-badge sms">
+                                <i data-lucide="message-square" size="14"></i> SMS Sent ✓
+                            </div>
+                            <div class="alert-badge gps">
+                                <i data-lucide="map-pin" size="14"></i> 28.6139°N 77.2090°E
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+        <style>
+            .showcase-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.2fr;
+                gap: 4rem;
+                align-items: center;
+                margin-top: 3rem;
+            }
+            @media (max-width: 900px) {
+                .showcase-grid {
+                    grid-template-columns: 1fr;
+                    gap: 3rem;
+                }
+            }
+            .phone-container {
+                position: relative;
+                width: 320px;
+                height: 650px;
+                margin: 0 auto;
+                perspective: 1000px;
+            }
+            .phone-mockup {
+                width: 100%;
+                height: 100%;
+                background: #020617;
+                border-radius: 45px;
+                border: 8px solid #1e293b;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255,255,255,0.05);
+                position: relative;
+                overflow: hidden;
+                transform: rotateY(-15deg) rotateX(5deg);
+                transform-style: preserve-3d;
+                transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .phone-container:hover .phone-mockup {
+                transform: rotateY(0deg) rotateX(0deg);
+            }
+            .phone-notch {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 130px;
+                height: 28px;
+                background: #1e293b;
+                border-bottom-left-radius: 18px;
+                border-bottom-right-radius: 18px;
+                z-index: 10;
+            }
+            .phone-screen {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at top, #0f172a, #020617);
+                display: flex;
+                flex-direction: column;
+            }
+            .app-header {
+                padding: 45px 20px 20px;
+                background: rgba(15, 23, 42, 0.8);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .app-title {
+                color: var(--primary);
+                font-weight: 700;
+                font-size: 1.2rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .app-camera-feed {
+                margin: 20px;
+                height: 220px;
+                background: #000;
+                border-radius: 15px;
+                position: relative;
+                overflow: hidden;
+                border: 1px solid rgba(251, 191, 36, 0.3);
+            }
+            .ai-overlay-box {
+                position: absolute;
+                top: 15%;
+                left: 25%;
+                width: 50%;
+                height: 70%;
+                border: 2px dashed rgba(16, 185, 129, 0.6);
+                border-radius: 10px;
+            }
+            .ai-eyes {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                margin-top: 35%;
+            }
+            .ai-eye {
+                width: 30px;
+                height: 15px;
+                border: 2px solid #10b981;
+                border-radius: 50%;
+                animation: app-blink 3s infinite;
+            }
+            @keyframes app-blink {
+                0%, 90%, 100% { height: 15px; background: transparent; }
+                95% { height: 2px; background: #10b981; }
+            }
+            .app-stats {
+                padding: 0 20px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .app-stat-card {
+                background: rgba(255,255,255,0.03);
+                padding: 15px;
+                border-radius: 12px;
+                text-align: center;
+            }
+            .app-stat-value {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #10b981;
+                font-family: monospace;
+            }
+            .app-stat-label {
+                font-size: 0.7rem;
+                color: var(--text-dim);
+                margin-top: 5px;
+            }
+            .app-sos-btn {
+                margin: 20px;
+                margin-top: auto;
+                margin-bottom: 30px;
+                background: linear-gradient(135deg, #ef4444, #991b1b);
+                color: white;
+                text-align: center;
+                padding: 15px;
+                border-radius: 50px;
+                font-weight: bold;
+                letter-spacing: 1px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+            }
+
+            .feature-list {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .feature-card {
+                background: rgba(15, 23, 42, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                padding: 1.5rem;
+                border-radius: 15px;
+                display: flex;
+                gap: 1.5rem;
+                transition: all 0.3s ease;
+                cursor: default;
+            }
+            .feature-card:hover {
+                background: rgba(15, 23, 42, 0.8);
+                border-color: rgba(251, 191, 36, 0.3);
+                transform: translateX(10px);
+            }
+            .feature-icon {
+                background: rgba(251, 191, 36, 0.1);
+                color: var(--primary);
+                width: 55px;
+                height: 55px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .feature-text h3 {
+                margin: 0 0 0.5rem 0;
+                color: var(--text-main);
+                font-size: 1.25rem;
+            }
+            .feature-text p {
+                margin: 0;
+                color: var(--text-dim);
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        </style>
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Eye Alert AI App</h2>
+                <div class="underline"></div>
+                <p class="section-subtitle">How our flagship mobile application ensures driver safety through advanced sensor fusion and edge AI.</p>
+            </div>
+            
+            <div class="showcase-grid">
+                <!-- Mobile Phone Mockup -->
+                <div class="phone-container fade-in glow-card">
+                    <div class="phone-mockup">
+                        <div class="phone-notch"></div>
+                        <div class="phone-screen">
+                            <div class="app-header">
+                                <div class="app-title"><i data-lucide="eye"></i> Eye Alert</div>
+                                <i data-lucide="menu" color="rgba(255,255,255,0.5)"></i>
+                            </div>
+                            
+                            <div class="app-camera-feed">
+                                <div class="ai-overlay-box">
+                                    <div class="ai-eyes">
+                                        <div class="ai-eye"></div>
+                                        <div class="ai-eye"></div>
+                                    </div>
+                                </div>
+                                <div style="position:absolute; bottom:12px; left:15px; color:#10b981; font-size:11px; font-family:monospace;">● AI TRACKING ACTIVE</div>
+                            </div>
+                            
+                            <div class="app-stats">
+                                <div class="app-stat-card">
+                                    <div class="app-stat-value">0.32</div>
+                                    <div class="app-stat-label">CURRENT EAR</div>
+                                </div>
+                                <div class="app-stat-card">
+                                    <div class="app-stat-value" style="color:var(--text-main);">1.2G</div>
+                                    <div class="app-stat-label">IMU G-FORCE</div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 15px; text-align: center;">
+                                <div style="color: #10b981; font-weight: bold; margin-bottom: 5px;">STATUS NORMAL</div>
+                                <div style="font-size: 0.85rem; color: var(--text-dim);">Driver is alert. No signs of drowsiness.</div>
+                            </div>
+
+                            <div class="app-sos-btn">
+                                <i data-lucide="phone-call"></i> EMERGENCY SOS
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature Description Cards -->
+                <div class="feature-list fade-in">
+                    <div class="feature-card glow-card">
+                        <div class="feature-icon"><i data-lucide="scan-face" size="28"></i></div>
+                        <div class="feature-text">
+                            <h3>Real-time Drowsiness Tracking</h3>
+                            <p>Utilizes on-device AI to map facial landmarks in real-time. By continuously calculating the Eye Aspect Ratio (EAR), the app detects micro-sleeps and triggers instant auditory alerts before an accident occurs.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card glow-card">
+                        <div class="feature-icon"><i data-lucide="activity" size="28"></i></div>
+                        <div class="feature-text">
+                            <h3>IMU Crash Detection</h3>
+                            <p>Monitors the smartphone's internal accelerometer and gyroscope. If it detects a sudden, massive G-force spike indicative of a collision, it immediately initiates the automated emergency protocol.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card glow-card">
+                        <div class="feature-icon"><i data-lucide="siren" size="28"></i></div>
+                        <div class="feature-text">
+                            <h3>Automated SOS Protocol</h3>
+                            <p>In the event of an unresponsive driver, the app automatically places hands-free emergency calls via loudspeaker, blasts a custom SOS audio broadcast, and dispatches SMS alerts containing precise GPS coordinates.</p>
+                        </div>
+                    </div>
+                    <div class="feature-card glow-card">
+                        <div class="feature-icon"><i data-lucide="users" size="28"></i></div>
+                        <div class="feature-text">
+                            <h3>Smart Contact Management</h3>
+                            <p>Built with a sleek Flutter frontend, users can easily configure their emergency medical contacts, customize crash countdown cancellation delays, and review dashcam footage.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SMART WASTE HUB SHOWCASE ===== -->
+    <section id="smart-waste-showcase">
+        <style>
+            /* ---- Smart Waste Hub Styles ---- */
+            .swh-grid {
+                display: grid;
+                grid-template-columns: 1.2fr 1fr;
+                gap: 4rem;
+                align-items: start;
+                margin-top: 3rem;
+            }
+            @media (max-width: 900px) {
+                .swh-grid { grid-template-columns: 1fr; }
+            }
+
+            /* Feature breakdown cards */
+            .swh-feature-card {
+                background: rgba(15,23,42,0.5);
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 18px;
+                padding: 2rem;
+                margin-bottom: 1.5rem;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+            .swh-feature-card::before {
+                content: '';
+                position: absolute;
+                left: 0; top: 0; bottom: 0;
+                width: 4px;
+                background: linear-gradient(180deg, var(--primary), var(--secondary));
+                border-radius: 2px;
+            }
+            .swh-feature-card:hover {
+                background: rgba(15,23,42,0.85);
+                border-color: rgba(251,191,36,0.3);
+                transform: translateX(8px);
+            }
+            .swh-feature-header {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+            .swh-feature-icon {
+                background: rgba(251,191,36,0.12);
+                color: var(--primary);
+                width: 48px; height: 48px;
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .swh-feature-header h3 {
+                margin: 0;
+                font-size: 1.15rem;
+                color: var(--text-main);
+            }
+            .swh-feature-card p {
+                margin: 0;
+                color: var(--text-dim);
+                line-height: 1.7;
+                font-size: 0.97rem;
+            }
+            .swh-tag-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-top: 1rem;
+            }
+            .swh-tag {
+                background: rgba(16,185,129,0.1);
+                color: #10b981;
+                border: 1px solid rgba(16,185,129,0.25);
+                padding: 0.3rem 0.85rem;
+                border-radius: 50px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                font-family: monospace;
+            }
+            .swh-tag.red { background: rgba(239,68,68,0.1); color:#ef4444; border-color:rgba(239,68,68,0.25); }
+            .swh-tag.gold { background: rgba(251,191,36,0.1); color:var(--primary); border-color:rgba(251,191,36,0.3); }
+
+            /* --- Animated Smart Bin Mockup --- */
+            .bin-mockup-wrap {
+                position: sticky;
+                top: 120px;
+            }
+            .bin-device-card {
+                background: rgba(10,15,30,0.7);
+                border: 1px solid var(--glass-border);
+                border-radius: 24px;
+                padding: 2rem;
+                backdrop-filter: blur(20px);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+                position: relative;
+                overflow: hidden;
+            }
+            .bin-device-card::before {
+                content:'';
+                position:absolute;
+                top:0;left:0;width:100%;height:4px;
+                background: linear-gradient(90deg, #10b981, var(--primary));
+            }
+            .bin-device-title {
+                font-family: monospace;
+                color: var(--primary);
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .bin-device-title::before {
+                content:'';
+                width: 8px; height: 8px;
+                background: #10b981;
+                border-radius: 50%;
+                display: inline-block;
+                box-shadow: 0 0 8px #10b981;
+                animation: pulse 1.5s infinite;
+            }
+
+            /* 3 bins side by side */
+            .bins-row {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                margin: 1.5rem 0;
+            }
+            .bin-unit {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .bin-body {
+                width: 64px;
+                height: 110px;
+                background: #0f172a;
+                border: 2px solid #1e293b;
+                border-radius: 5px 5px 8px 8px;
+                position: relative;
+                overflow: hidden;
+            }
+            .bin-fill-anim {
+                position: absolute;
+                bottom: 0; left: 0; right: 0;
+                border-radius: 0 0 6px 6px;
+                transition: height 1s ease;
+            }
+            .bin-fill-anim.g { background: linear-gradient(to top, #10b981, #34d399); }
+            .bin-fill-anim.o { background: linear-gradient(to top, #f59e0b, #fbbf24); }
+            .bin-fill-anim.r { background: linear-gradient(to top, #ef4444, #f87171); animation: bin-pulse-red 1s infinite; }
+            @keyframes bin-pulse-red {
+                0%,100%{ opacity:1; } 50%{ opacity:0.6; }
+            }
+            .bin-lid {
+                width: 72px;
+                height: 12px;
+                background: #1e293b;
+                border: 2px solid #334155;
+                border-radius: 4px;
+                transform-origin: left center;
+                transition: transform 0.4s ease;
+            }
+            .bin-unit:hover .bin-lid {
+                transform: rotate(-45deg);
+            }
+            .bin-label {
+                font-size: 0.75rem;
+                color: var(--text-dim);
+                font-family: monospace;
+            }
+            .bin-pct {
+                font-weight: bold;
+                font-size: 0.85rem;
+                font-family: monospace;
+            }
+
+            /* Data packets flowing */
+            .data-flow {
+                margin-top: 1.5rem;
+            }
+            .data-flow-title {
+                font-size: 0.75rem;
+                color: var(--text-dim);
+                font-family: monospace;
+                letter-spacing: 1px;
+                margin-bottom: 1rem;
+            }
+            .data-packet {
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.07);
+                border-radius: 10px;
+                padding: 0.75rem 1rem;
+                margin-bottom: 0.6rem;
+                font-family: monospace;
+                font-size: 0.8rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                animation: packet-slide 0.4s ease;
+            }
+            @keyframes packet-slide {
+                from { opacity: 0; transform: translateX(-10px); }
+                to   { opacity: 1; transform: translateX(0); }
+            }
+            .packet-key { color: var(--text-dim); }
+            .packet-val { color: #10b981; font-weight: bold; }
+            .packet-val.warn { color: #f59e0b; }
+            .packet-val.crit { color: #ef4444; }
+
+            /* Route card */
+            .route-card {
+                margin-top: 1.5rem;
+                background: rgba(251,191,36,0.07);
+                border: 1px solid rgba(251,191,36,0.2);
+                border-radius: 14px;
+                padding: 1.2rem;
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+            }
+            .route-card p { margin: 0; font-size: 0.9rem; color: var(--text-dim); }
+            .route-card strong { color: var(--primary); }
+        </style>
+
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Smart Waste Hub</h2>
+                <div class="underline"></div>
+                <p class="section-subtitle">
+                    An IoT-powered intelligent waste management network — every bin is smart, connected, and self-reporting.
+                </p>
+            </div>
+
+            <div class="swh-grid">
+
+                <!-- LEFT: Feature breakdown -->
+                <div class="fade-in">
+
+                    <!-- Feature 1 -->
+                    <div class="swh-feature-card glow-card">
+                        <div class="swh-feature-header">
+                            <div class="swh-feature-icon"><i data-lucide="radar" size="24"></i></div>
+                            <h3>Ultrasonic Fill-Level Sensing</h3>
+                        </div>
+                        <p>Each bin has an <strong>HC-SR04 ultrasonic sensor</strong> mounted inside the lid. It continuously measures the distance to the waste surface and converts it into a fill percentage. Readings are taken every <strong>5 seconds</strong>.</p>
+                        <div class="swh-tag-row">
+                            <span class="swh-tag gold">HC-SR04 Sensor</span>
+                            <span class="swh-tag">0–100% Fill Level</span>
+                            <span class="swh-tag">5s Interval</span>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="swh-feature-card glow-card">
+                        <div class="swh-feature-header">
+                            <div class="swh-feature-icon"><i data-lucide="wifi" size="24"></i></div>
+                            <h3>MQTT Telemetry Broadcast</h3>
+                        </div>
+                        <p>The onboard <strong>ESP8266 / NodeMCU</strong> publishes sensor data over Wi-Fi to a central MQTT broker. Each packet includes the bin ID, zone ID, fill %, GPS coordinates, battery voltage, and a timestamp. Data is received instantly by the dashboard.</p>
+                        <div class="swh-tag-row">
+                            <span class="swh-tag gold">ESP8266 Wi-Fi</span>
+                            <span class="swh-tag">MQTT Protocol</span>
+                            <span class="swh-tag">Real-time Push</span>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="swh-feature-card glow-card">
+                        <div class="swh-feature-header">
+                            <div class="swh-feature-icon"><i data-lucide="triangle-alert" size="24"></i></div>
+                            <h3>Threshold Alerts & Auto-Dispatch</h3>
+                        </div>
+                        <p>When any bin crosses <strong>85% fill level</strong>, the system automatically generates a dispatch alert. The AI route optimizer recalculates the shortest collection route across all critical bins and sends a notification to the municipal vehicle driver's app.</p>
+                        <div class="swh-tag-row">
+                            <span class="swh-tag red">85% Threshold Alert</span>
+                            <span class="swh-tag">AI Route Optimizer</span>
+                            <span class="swh-tag">Push Notification</span>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="swh-feature-card glow-card">
+                        <div class="swh-feature-header">
+                            <div class="swh-feature-icon"><i data-lucide="map-pin" size="24"></i></div>
+                            <h3>GPS Zone Mapping</h3>
+                        </div>
+                        <p>Every bin is registered with a <strong>GPS coordinate and zone label</strong> in the central database. The live map view on the dashboard colour-codes bins by status — <span style="color:#10b981;">Green (OK)</span>, <span style="color:#f59e0b;">Orange (Warning)</span>, <span style="color:#ef4444;">Red (Critical)</span>.</p>
+                        <div class="swh-tag-row">
+                            <span class="swh-tag gold">GPS Geo-tagging</span>
+                            <span class="swh-tag">Zone Clusters</span>
+                            <span class="swh-tag">Live Map View</span>
+                        </div>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="swh-feature-card glow-card">
+                        <div class="swh-feature-header">
+                            <div class="swh-feature-icon"><i data-lucide="bar-chart-3" size="24"></i></div>
+                            <h3>Analytics Dashboard & History</h3>
+                        </div>
+                        <p>All telemetry is logged to a time-series database. The web dashboard shows <strong>fill trends, peak overflow times, collection frequency, and per-zone waste generation heatmaps</strong> — enabling smarter city planning and waste reduction.</p>
+                        <div class="swh-tag-row">
+                            <span class="swh-tag gold">Time-Series DB</span>
+                            <span class="swh-tag">Heatmaps</span>
+                            <span class="swh-tag">Collection History</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT: Animated bin mockup + data packets -->
+                <div class="bin-mockup-wrap fade-in">
+                    <div class="bin-device-card glow-card">
+                        <div class="bin-device-title">
+                            <i data-lucide="server" size="14"></i> WASTE HUB — LIVE TELEMETRY
+                        </div>
+
+                        <!-- 3 Bins -->
+                        <div class="bins-row">
+                            <div class="bin-unit">
+                                <div class="bin-lid"></div>
+                                <div class="bin-body">
+                                    <div class="bin-fill-anim g" style="height:38%"></div>
+                                </div>
+                                <div class="bin-pct" style="color:#10b981;">38%</div>
+                                <div class="bin-label">ZONE A-1</div>
+                            </div>
+                            <div class="bin-unit">
+                                <div class="bin-lid"></div>
+                                <div class="bin-body">
+                                    <div class="bin-fill-anim o" style="height:72%"></div>
+                                </div>
+                                <div class="bin-pct" style="color:#f59e0b;">72%</div>
+                                <div class="bin-label">ZONE A-2</div>
+                            </div>
+                            <div class="bin-unit">
+                                <div class="bin-lid"></div>
+                                <div class="bin-body">
+                                    <div class="bin-fill-anim r" style="height:91%"></div>
+                                </div>
+                                <div class="bin-pct" style="color:#ef4444;">91% !</div>
+                                <div class="bin-label">ZONE A-3</div>
+                            </div>
+                        </div>
+
+                        <!-- Live MQTT data packets -->
+                        <div class="data-flow">
+                            <div class="data-flow-title">▶ MQTT PAYLOAD — LATEST PACKET</div>
+                            <div class="data-packet">
+                                <span class="packet-key">bin_id</span>
+                                <span class="packet-val">"ZONE-A3-BIN-7"</span>
+                            </div>
+                            <div class="data-packet">
+                                <span class="packet-key">fill_level</span>
+                                <span class="packet-val crit">91%</span>
+                            </div>
+                            <div class="data-packet">
+                                <span class="packet-key">status</span>
+                                <span class="packet-val crit">CRITICAL</span>
+                            </div>
+                            <div class="data-packet">
+                                <span class="packet-key">gps_lat</span>
+                                <span class="packet-val" style="color:var(--text-main);">28.6139° N</span>
+                            </div>
+                            <div class="data-packet">
+                                <span class="packet-key">gps_lng</span>
+                                <span class="packet-val" style="color:var(--text-main);">77.2090° E</span>
+                            </div>
+                            <div class="data-packet">
+                                <span class="packet-key">battery</span>
+                                <span class="packet-val warn">3.8V</span>
+                            </div>
+                            <div class="data-packet">
+                                <span class="packet-key">timestamp</span>
+                                <span class="packet-val" style="color:#94a3b8;">2026-05-08 17:30:01</span>
+                            </div>
+                        </div>
+
+                        <!-- Auto dispatch alert -->
+                        <div class="route-card">
+                            <i data-lucide="truck" color="var(--primary)" size="28"></i>
+                            <p><strong>Auto-Dispatch Triggered!</strong><br>
+                            Route optimized → A-3 → A-2 → A-1<br>
+                            Estimated arrival: <strong>12 mins</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="journey">
+
+        <style>
+            /* --- Timeline Styles --- */
+            .timeline-container {
+                position: relative;
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 2rem 0;
+            }
+            .timeline-line {
+                position: absolute;
+                width: 4px;
+                background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 2px;
+                box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+            }
+            .timeline-item {
+                position: relative;
+                width: 50%;
+                padding: 2rem 3rem;
+                box-sizing: border-box;
+            }
+            .timeline-item:nth-child(even) {
+                left: 0;
+                text-align: right;
+            }
+            .timeline-item.right {
+                left: 50%;
+                text-align: left;
+            }
+            .timeline-dot {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                background: #030712;
+                border: 4px solid var(--primary);
+                border-radius: 50%;
+                top: 50%;
+                transform: translateY(-50%);
+                right: -10px;
+                z-index: 2;
+                box-shadow: 0 0 15px var(--primary);
+            }
+            .timeline-item.right .timeline-dot {
+                left: -10px;
+            }
+            .timeline-content {
+                background: rgba(15, 23, 42, 0.6);
+                border: 1px solid rgba(251, 191, 36, 0.2);
+                border-radius: 15px;
+                padding: 1.5rem;
+                position: relative;
+            }
+            .timeline-date {
+                color: var(--primary);
+                font-family: monospace;
+                font-weight: bold;
+                letter-spacing: 1px;
+                margin-bottom: 0.5rem;
+            }
+            @media (max-width: 768px) {
+                .timeline-line { left: 30px; }
+                .timeline-item { width: 100%; padding-left: 70px; padding-right: 20px; text-align: left !important; }
+                .timeline-item.right { left: 0; }
+                .timeline-dot { left: 20px !important; }
+            }
+        </style>
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Our Innovation Journey</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="timeline-container fade-in">
+                <div class="timeline-line"></div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glow-card">
+                        <div class="timeline-date">Phase 1 - Inception</div>
+                        <h3 style="margin:0.5rem 0;">Identifying Community Problems</h3>
+                        <p>We surveyed local areas to find critical pain points like waste management and road safety.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glow-card">
+                        <div class="timeline-date">Phase 2 - Design</div>
+                        <h3 style="margin:0.5rem 0;">Prototyping Hardware</h3>
+                        <p>Drafting circuit logic and programming microcontrollers to interface with various sensors.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glow-card">
+                        <div class="timeline-date">Phase 3 - Integration</div>
+                        <h3 style="margin:0.5rem 0;">Developing the AI Vision Core</h3>
+                        <p>Linking Python machine learning pipelines with our IoT nodes using secure MQTT protocols.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glow-card">
+                        <div class="timeline-date">Phase 4 - Deployment</div>
+                        <h3 style="margin:0.5rem 0;">Real-world Testing</h3>
+                        <p>Simulating field tests for our autonomous bots, smart hubs, and tracking units.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Demo Section -->
     <section id="demo">
         <div class="container">
@@ -962,11 +2820,243 @@
                 <h2>Project Demo</h2>
                 <div class="underline"></div>
             </div>
-            <div class="demo-box fade-in">
-                <div class="demo-overlay">
-                    <div class="play-btn"><i data-lucide="play"></i></div>
-                    <h3>Watch Prototype</h3>
-                    <p>Experience the innovation in action.</p>
+            <div class="sim-dashboard fade-in">
+                <!-- Tabs -->
+                <div class="sim-nav">
+                    <button class="sim-tab active" data-sim="eye-alert">
+                        <i data-lucide="eye" size="18"></i>
+                        <span>Eye Alert AI</span>
+                    </button>
+                    <button class="sim-tab" data-sim="waste-hub">
+                        <i data-lucide="trash-2" size="18"></i>
+                        <span>Smart Waste Hub</span>
+                    </button>
+                    <button class="sim-tab" data-sim="solar-tracker">
+                        <i data-lucide="sun" size="18"></i>
+                        <span>AI Solar Tracker</span>
+                    </button>
+                </div>
+
+                <!-- Simulation Views -->
+                <div class="sim-content">
+                    <!-- Tab 1: Eye Alert -->
+                    <div class="sim-panel active" id="panel-eye-alert">
+                        <div class="sim-grid">
+                            <!-- Visualizer -->
+                            <div class="sim-visualizer">
+                                <div class="camera-feed-container">
+                                    <div class="camera-feed" id="camera-feed">
+                                        <!-- Animated AI Face mesh vector overlay -->
+                                        <div class="face-mesh-overlay">
+                                            <svg viewBox="0 0 100 100" class="face-svg">
+                                                <circle cx="50" cy="50" r="40" stroke="rgba(251, 191, 36, 0.2)" stroke-width="0.5" fill="none" />
+                                                <path id="face-outline" d="M30,40 Q50,25 70,40 Q75,70 50,85 Q25,70 30,40 Z" stroke="var(--primary)" stroke-width="1.5" fill="none" />
+                                                <!-- Left Eye -->
+                                                <ellipse id="left-eye" cx="42" cy="45" rx="5" ry="3" stroke="var(--primary)" stroke-width="1" fill="none" />
+                                                <circle id="left-pupil" cx="42" cy="45" r="1.5" fill="var(--primary)" />
+                                                <!-- Right Eye -->
+                                                <ellipse id="right-eye" cx="58" cy="45" rx="5" ry="3" stroke="var(--primary)" stroke-width="1" fill="none" />
+                                                <circle id="right-pupil" cx="58" cy="45" r="1.5" fill="var(--primary)" />
+                                                <!-- Mouth -->
+                                                <path id="mouth" d="M43,65 Q50,65 57,65" stroke="var(--primary)" stroke-width="1" fill="none" />
+                                            </svg>
+                                        </div>
+                                        <div class="camera-status-tag">LIVE FEED (SIMULATED)</div>
+                                        <div class="camera-alert-overlay" id="camera-alert-overlay">
+                                            <div class="alert-pulse-box">
+                                                <i data-lucide="alert-triangle" class="alert-icon-shake"></i>
+                                                <span>DROWSINESS ALERT!</span>
+                                                <p>AUDIO ALARM BROADCASTING</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="telemetry-sparklines">
+                                        <div class="sparkline-container">
+                                            <span class="spark-label">EAR (Eye Aspect Ratio)</span>
+                                            <svg viewBox="0 0 200 40" class="spark-svg">
+                                                <path id="ear-chart" d="M0,20 L20,18 L40,22 L60,19 L80,21 L100,20 L120,5 L140,35 L160,20 L180,21 L200,19" fill="none" stroke="var(--primary)" stroke-width="1.5" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Controls & Telemetry Stats -->
+                            <div class="sim-details">
+                                <div class="telemetry-panel">
+                                    <h3>System Telemetry</h3>
+                                    <div class="telemetry-grid">
+                                        <div class="tel-card">
+                                            <span class="tel-label">AI Inference</span>
+                                            <span class="tel-value" id="eye-inference">12ms</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">Blink Duration</span>
+                                            <span class="tel-value" id="eye-blink">0.08s</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">EAR Score</span>
+                                            <span class="tel-value" id="eye-ear">0.29</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">System Status</span>
+                                            <span class="tel-value text-green" id="eye-status">MONITORING</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sim-action-controls">
+                                    <h3>Interaction Terminal</h3>
+                                    <p class="control-help">Trigger simulated driver states to see how the AI system reacts.</p>
+                                    <div class="btn-group-row">
+                                        <button class="btn-sim active" id="btn-state-normal">Driver Normal</button>
+                                        <button class="btn-sim btn-danger-sim" id="btn-state-sleep">Driver Asleep</button>
+                                    </div>
+                                    <audio id="sim-buzzer" src="https://assets.mixkit.co/active_storage/sfx/1006/1006-84.wav" preload="auto" loop></audio>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Smart Waste -->
+                    <div class="sim-panel" id="panel-waste-hub">
+                        <div class="sim-grid">
+                            <!-- Visualizer -->
+                            <div class="sim-visualizer">
+                                <div class="bins-container">
+                                    <div class="bin-item">
+                                        <div class="bin-label">Commercial Bin #1</div>
+                                        <div class="bin-graphic-wrapper">
+                                            <div class="bin-lid"></div>
+                                            <div class="bin-body">
+                                                <div class="bin-fill fill-green" id="bin-1-fill" style="height: 35%;">
+                                                    <span class="bin-percent-tag" id="bin-1-percent">35%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bin-status text-green" id="bin-1-status">Normal</div>
+                                    </div>
+                                    <div class="bin-item">
+                                        <div class="bin-label">Residential Bin #2</div>
+                                        <div class="bin-graphic-wrapper">
+                                            <div class="bin-lid"></div>
+                                            <div class="bin-body">
+                                                <div class="bin-fill fill-orange" id="bin-2-fill" style="height: 72%;">
+                                                    <span class="bin-percent-tag" id="bin-2-percent">72%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bin-status text-orange" id="bin-2-status">Warning</div>
+                                    </div>
+                                    <div class="bin-item">
+                                        <div class="bin-label">Public Park Bin #3</div>
+                                        <div class="bin-graphic-wrapper">
+                                            <div class="bin-lid"></div>
+                                            <div class="bin-body">
+                                                <div class="bin-fill fill-red" id="bin-3-fill" style="height: 89%;">
+                                                    <span class="bin-percent-tag" id="bin-3-percent">89%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bin-status text-red" id="bin-3-status">Alert!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Controls & Details -->
+                            <div class="sim-details">
+                                <div class="telemetry-panel">
+                                    <h3>IoT Sensor Network</h3>
+                                    <div class="telemetry-grid">
+                                        <div class="tel-card">
+                                            <span class="tel-label">Average Fill</span>
+                                            <span class="tel-value" id="waste-avg">65.3%</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">Active Sensors</span>
+                                            <span class="tel-value">3 / 3</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">Route Status</span>
+                                            <span class="tel-value text-orange" id="waste-route">DISPATCH NEEDED</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">Battery Level</span>
+                                            <span class="tel-value text-green">94%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sim-action-controls">
+                                    <h3>Node Simulation Console</h3>
+                                    <p class="control-help">Simulate garbage accumulation or send automated collections dispatch.</p>
+                                    <div class="btn-group-row">
+                                        <button class="btn-sim" id="btn-simulate-waste">Fill Bins</button>
+                                        <button class="btn-sim btn-success-sim" id="btn-empty-waste">Dispatch Truck</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Solar Tracker -->
+                    <div class="sim-panel" id="panel-solar-tracker">
+                        <div class="sim-grid">
+                            <!-- Visualizer -->
+                            <div class="sim-visualizer">
+                                <div class="solar-tracker-container">
+                                    <div class="sim-sun" id="sim-sun">
+                                        <i data-lucide="sun" class="sun-icon-glowing"></i>
+                                    </div>
+                                    <div class="tracker-pivot-station">
+                                        <div class="tracker-panel-graphic" id="tracker-panel-graphic">
+                                            <div class="solar-cell-grid">
+                                                <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                                                <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tracker-stand"></div>
+                                    </div>
+                                    <div class="solar-help-label">Sun is interactive! Drag inside box to test dual-axis tracking.</div>
+                                </div>
+                            </div>
+                            <!-- Controls & Stats -->
+                            <div class="sim-details">
+                                <div class="telemetry-panel">
+                                    <h3>Tracker Diagnostics</h3>
+                                    <div class="telemetry-grid">
+                                        <div class="tel-card">
+                                            <span class="tel-label">Panel Angle</span>
+                                            <span class="tel-value" id="solar-angle">0°</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">LDR Diff</span>
+                                            <span class="tel-value" id="solar-ldr">0.0V</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">Efficiency</span>
+                                            <span class="tel-value text-green" id="solar-efficiency">96%</span>
+                                        </div>
+                                        <div class="tel-card">
+                                            <span class="tel-label">Power Yield</span>
+                                            <span class="tel-value" id="solar-yield">142W</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sim-action-controls">
+                                    <h3>Atmospheric Conditions</h3>
+                                    <p class="control-help">Change weather anomalies to check dynamic power generation models.</p>
+                                    <div class="btn-group-row weather-tabs">
+                                        <button class="btn-sim weather-tab active" data-weather="sunny">
+                                            <i data-lucide="sun" size="14"></i> Sunny
+                                        </button>
+                                        <button class="btn-sim weather-tab" data-weather="cloudy">
+                                            <i data-lucide="cloud" size="14"></i> Cloudy
+                                        </button>
+                                        <button class="btn-sim weather-tab" data-weather="rainy">
+                                            <i data-lucide="cloud-rain" size="14"></i> Rainy
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -975,29 +3065,266 @@
     <!-- Project Concepts -->
     <section id="project">
         <div class="container">
+            <style>
+                .project-controls {
+                    margin-bottom: 2rem;
+                    display: flex;
+                    justify-content: center;
+                }
+                .search-box {
+                    position: relative;
+                    width: 100%;
+                    max-width: 600px;
+                }
+                .search-box .search-icon {
+                    position: absolute;
+                    left: 1.2rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    color: var(--text-dim);
+                }
+                #project-search {
+                    width: 100%;
+                    padding: 1.2rem 1rem 1.2rem 3.5rem;
+                    background: rgba(15, 23, 42, 0.6);
+                    border: 1px solid rgba(251, 191, 36, 0.2);
+                    border-radius: 50px;
+                    color: var(--text-main);
+                    font-family: 'Outfit', sans-serif;
+                    font-size: 1rem;
+                    transition: all 0.3s;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                }
+                #project-search:focus {
+                    outline: none;
+                    border-color: var(--primary);
+                    box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+                    background: rgba(15, 23, 42, 0.9);
+                }
+                .load-more-container {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-top: 3rem;
+                    gap: 1rem;
+                }
+                .project-count-text {
+                    color: var(--text-dim);
+                    font-size: 0.9rem;
+                    font-family: monospace;
+                    letter-spacing: 1px;
+                }
+            </style>
+
             <div class="section-title fade-in">
                 <h2>Project Ideas</h2>
                 <div class="underline"></div>
             </div>
+
+            <!-- Enhanced Search & Filter Controls -->
+            <div class="project-controls fade-in">
+                <div class="search-box">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="project-search" placeholder="Search by keyword, tech, or number (e.g. AI, IoT, 42)..." />
+                </div>
+            </div>
+
             <div id="project-list" class="numbered-list">
                 <!-- Projects will appear here -->
+            </div>
+
+            <!-- Load More Action -->
+            <div class="load-more-container fade-in">
+                <button id="btn-load-more" class="btn-primary" style="display: none;">
+                    <span>Load More Projects</span>
+                    <i data-lucide="chevron-down" size="18" style="margin-left: 0.5rem;"></i>
+                </button>
+                <div id="project-count-text" class="project-count-text">Showing 0 of 0</div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
+        <style>
+            .contact-grid {
+                display: grid;
+                grid-template-columns: 1fr 1.5fr;
+                gap: 3rem;
+                margin-top: 3rem;
+                align-items: start;
+            }
+            .contact-info {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .info-card {
+                background: rgba(15, 23, 42, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                padding: 1.5rem;
+                border-radius: 15px;
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+                transition: all 0.3s ease;
+            }
+            .info-card:hover {
+                border-color: rgba(251, 191, 36, 0.3);
+                transform: translateY(-5px);
+                background: rgba(15, 23, 42, 0.8);
+            }
+            .info-icon {
+                background: rgba(251, 191, 36, 0.1);
+                padding: 1rem;
+                border-radius: 50%;
+                color: var(--primary);
+                display: flex;
+            }
+            .info-content h4 {
+                margin: 0 0 0.5rem 0;
+                color: var(--text-main);
+                font-size: 1.1rem;
+            }
+            .info-content p {
+                margin: 0;
+                color: var(--text-dim);
+                font-size: 0.95rem;
+            }
+            
+            .contact-form {
+                background: rgba(10, 15, 30, 0.6);
+                border: 1px solid var(--glass-border);
+                backdrop-filter: blur(20px);
+                padding: 2.5rem;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                position: relative;
+                overflow: hidden;
+            }
+            .contact-form::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background: linear-gradient(90deg, var(--primary), var(--secondary));
+            }
+            .form-group {
+                margin-bottom: 1.5rem;
+                position: relative;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: var(--text-main);
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+            .form-control {
+                width: 100%;
+                background: rgba(15, 23, 42, 0.8);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 1rem 1rem 1rem 3rem;
+                border-radius: 12px;
+                color: var(--text-main);
+                font-family: 'Outfit', sans-serif;
+                font-size: 1rem;
+                transition: all 0.3s;
+                box-sizing: border-box;
+            }
+            .form-control:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
+                background: rgba(15, 23, 42, 0.95);
+            }
+            .form-icon {
+                position: absolute;
+                left: 1rem;
+                top: 2.3rem;
+                color: var(--text-dim);
+                pointer-events: none;
+                transition: color 0.3s;
+            }
+            .form-control:focus + .form-icon {
+                color: var(--primary);
+            }
+            textarea.form-control {
+                min-height: 120px;
+                padding-top: 1rem;
+                resize: vertical;
+            }
+            .btn-submit {
+                width: 100%;
+                justify-content: center;
+                margin-top: 1rem;
+                padding: 1.2rem;
+                font-size: 1.1rem;
+            }
+            @media (max-width: 768px) {
+                .contact-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
         <div class="container">
             <div class="section-title fade-in">
-                <h2>Get In Touch</h2>
+                <h2>Secure Transmission</h2>
                 <div class="underline"></div>
+                <p class="section-subtitle">Establish a secure uplink with the VISION TEAM to discuss innovation, collaborations, and technological implementations.</p>
             </div>
-            <p class="fade-in">Interested in our project? Let's collaborate!</p>
-            <a href="mailto:contact@atllab.com" class="btn-primary fade-in"
-                style="margin-top: 2rem; display: inline-flex;">
-                <span>Contact Us</span>
-                <i data-lucide="mail" size="18" style="margin-left: 0.5rem;"></i>
-            </a>
+            
+            <div class="contact-grid">
+                <div class="contact-info fade-in">
+                    <div class="info-card">
+                        <div class="info-icon"><i data-lucide="map-pin"></i></div>
+                        <div class="info-content">
+                            <h4>Headquarters</h4>
+                            <p>ATL LAB Central Node<br>Tech Innovation Wing</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i data-lucide="mail"></i></div>
+                        <div class="info-content">
+                            <h4>Direct Uplink</h4>
+                            <p>admin@visionteam.dev<br>contact@atllab.com</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i data-lucide="radio"></i></div>
+                        <div class="info-content">
+                            <h4>Telemetry Channel</h4>
+                            <p>Frequency: 2.4GHz<br>Encrypted MQTT Node</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form fade-in glow-card">
+                    <form onsubmit="event.preventDefault(); this.innerHTML = '<div style=\'text-align:center; padding: 3rem;\'><i data-lucide=\'check-circle\' size=\'64\' color=\'var(--primary)\'></i><h3 style=\'margin-top:1rem;\'>Transmission Successful</h3><p style=\'color:var(--text-dim);\'>Your message has been encrypted and sent to the VISION Core.</p></div>'; lucide.createIcons();">
+                        <div class="form-group">
+                            <label>Designation / Name</label>
+                            <input type="text" class="form-control" placeholder="Enter your identifier" required>
+                            <i data-lucide="user" class="form-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <label>Return Frequency (Email)</label>
+                            <input type="email" class="form-control" placeholder="Enter your email" required>
+                            <i data-lucide="at-sign" class="form-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <label>Encrypted Payload (Message)</label>
+                            <textarea class="form-control" placeholder="Type your transmission here..." required></textarea>
+                            <i data-lucide="message-square" class="form-icon"></i>
+                        </div>
+                        <button type="submit" class="btn-primary btn-submit">
+                            <span>Transmit Data Payload</span>
+                            <i data-lucide="send" size="18" style="margin-left: 0.5rem;"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1007,9 +3334,441 @@
         <img class="modal-content" id="modal-img">
     </div>
 
+    <!-- Dynamic Project Details Modal -->
+    <style>
+        .project-modal-box {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            max-width: 600px;
+            width: 90%;
+            padding: 2.5rem;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            transform: scale(0.95);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #project-modal.active .project-modal-box {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .close-project-modal {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: #f1f1f1;
+            font-size: 35px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-project-modal:hover {
+            color: var(--primary);
+        }
+        .project-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1.5rem;
+        }
+        .project-modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+        .project-modal-body p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+        }
+        .project-tech-stack {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .tech-pill {
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+    </style>
+    <div id="project-modal" class="modal" style="display: none; align-items: center; justify-content: center; z-index: 10000; overflow-y: auto;">
+        <div class="project-modal-box">
+            <span class="close-project-modal" id="close-pm-btn">&times;</span>
+            <div class="project-modal-header">
+                <i id="pm-icon" data-lucide="cpu" size="48" color="var(--primary)"></i>
+                <div>
+                    <h2 id="pm-title">Project Title</h2>
+                    <div style="color: var(--primary); font-family: monospace; margin-top: 0.5rem; font-weight: 600;">Prototype ID: <span id="pm-number">001</span></div>
+                </div>
+            </div>
+            <div class="project-modal-body">
+                <p id="pm-desc">Project description goes here...</p>
+                <div class="project-tech-stack" id="pm-tech-stack">
+                    <span class="tech-pill">IoT Sensors</span>
+                    <span class="tech-pill">AI/ML Models</span>
+                    <span class="tech-pill">Microcontrollers</span>
+                </div>
+                <div style="margin-top: 2.5rem;">
+                    <button class="btn-primary" style="width: 100%; justify-content: center;">
+                        <span>Initialize Simulation Sequence</span> 
+                        <i data-lucide="terminal" size="18" style="margin-left: 0.5rem;"></i>
+                    </button>
+                </div>
+            </div>
+    </div>
+    </div>
+
+    <!-- ===== ANIMATED STATS COUNTER ===== -->
+    <section id="stats-section" style="padding: 5rem 0; background: rgba(10,15,30,0.6); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04);">
+        <style>
+            .stats-row {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+                text-align: center;
+            }
+            @media (max-width: 768px) {
+                .stats-row { grid-template-columns: repeat(2, 1fr); }
+            }
+            .stat-item {
+                padding: 2rem 1rem;
+                position: relative;
+            }
+            .stat-item::after {
+                content: '';
+                position: absolute;
+                right: 0; top: 20%; height: 60%;
+                width: 1px;
+                background: rgba(255,255,255,0.06);
+            }
+            .stat-item:last-child::after { display: none; }
+            .stat-num {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: clamp(2.5rem, 5vw, 4rem);
+                font-weight: 700;
+                background: linear-gradient(135deg, #fbbf24, #f59e0b);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                line-height: 1;
+                margin-bottom: 0.6rem;
+                display: block;
+            }
+            .stat-desc {
+                color: #64748b;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                font-weight: 600;
+            }
+            .stat-icon {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 1rem;
+                color: rgba(251,191,36,0.4);
+            }
+        </style>
+        <div class="container">
+            <div class="stats-row fade-in">
+                <div class="stat-item">
+                    <div class="stat-icon"><i data-lucide="layers" size="28"></i></div>
+                    <span class="stat-num" data-target="3" data-suffix="">0</span>
+                    <div class="stat-desc">Core Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i data-lucide="lightbulb" size="28"></i></div>
+                    <span class="stat-num" data-target="341" data-suffix="+">0</span>
+                    <div class="stat-desc">Project Ideas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i data-lucide="users" size="28"></i></div>
+                    <span class="stat-num" data-target="4" data-suffix="">0</span>
+                    <div class="stat-desc">Team Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i data-lucide="award" size="28"></i></div>
+                    <span class="stat-num" data-target="1" data-suffix="">0</span>
+                    <div class="stat-desc">ATL School</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TECH STACK SECTION ===== -->
+    <section id="tech-stack" style="padding: 5rem 0;">
+        <style>
+            .tech-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+                margin-top: 3rem;
+            }
+            .tech-card {
+                background: rgba(15,23,42,0.6);
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 14px;
+                padding: 1.2rem 1.8rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                transition: all 0.3s ease;
+                cursor: default;
+            }
+            .tech-card:hover {
+                background: rgba(15,23,42,0.9);
+                border-color: rgba(251,191,36,0.3);
+                transform: translateY(-5px);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            }
+            .tech-card-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .tech-card-name {
+                font-weight: 600;
+                font-size: 0.95rem;
+                color: var(--text-main);
+            }
+            .tech-card-type {
+                font-size: 0.72rem;
+                color: var(--text-dim);
+                margin-top: 2px;
+            }
+        </style>
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Tech Stack</h2>
+                <div class="underline"></div>
+                <p class="section-subtitle">The tools, frameworks, and hardware powering every VISION TEAM prototype.</p>
+            </div>
+            <div class="tech-grid fade-in">
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(2,48,71,0.8);"><i data-lucide="smartphone" color="#0ea5e9" size="22"></i></div>
+                    <div><div class="tech-card-name">Flutter</div><div class="tech-card-type">Mobile App Framework</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(30,58,138,0.8);"><i data-lucide="code-2" color="#60a5fa" size="22"></i></div>
+                    <div><div class="tech-card-name">Python</div><div class="tech-card-type">AI/ML Processing</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(5,46,22,0.8);"><i data-lucide="cpu" color="#4ade80" size="22"></i></div>
+                    <div><div class="tech-card-name">ESP8266 / NodeMCU</div><div class="tech-card-type">IoT Microcontroller</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(69,10,10,0.8);"><i data-lucide="zap" color="#f87171" size="22"></i></div>
+                    <div><div class="tech-card-name">Arduino</div><div class="tech-card-type">Hardware Control</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(49,46,129,0.8);"><i data-lucide="wifi" color="#a78bfa" size="22"></i></div>
+                    <div><div class="tech-card-name">MQTT Protocol</div><div class="tech-card-type">IoT Messaging</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(2,44,34,0.8);"><i data-lucide="scan-face" color="#34d399" size="22"></i></div>
+                    <div><div class="tech-card-name">Google ML Kit</div><div class="tech-card-type">Face Mesh AI</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(67,20,7,0.8);"><i data-lucide="activity" color="#fb923c" size="22"></i></div>
+                    <div><div class="tech-card-name">IMU Sensors</div><div class="tech-card-type">Accelerometer + Gyro</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(23,37,84,0.8);"><i data-lucide="radar" color="#93c5fd" size="22"></i></div>
+                    <div><div class="tech-card-name">HC-SR04</div><div class="tech-card-type">Ultrasonic Sensor</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(54,7,48,0.8);"><i data-lucide="sun" color="#e879f9" size="22"></i></div>
+                    <div><div class="tech-card-name">LDR + Servo Motor</div><div class="tech-card-type">Solar Tracking</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(7,36,63,0.8);"><i data-lucide="map-pin" color="#38bdf8" size="22"></i></div>
+                    <div><div class="tech-card-name">GPS Module</div><div class="tech-card-type">Location Tracking</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(20,20,0,0.8);"><i data-lucide="globe" color="#facc15" size="22"></i></div>
+                    <div><div class="tech-card-name">HTML / CSS / JS</div><div class="tech-card-type">Web Portfolio</div></div>
+                </div>
+                <div class="tech-card glow-card">
+                    <div class="tech-card-icon" style="background:rgba(3,7,18,0.8);"><i data-lucide="git-branch" color="#94a3b8" size="22"></i></div>
+                    <div><div class="tech-card-name">Git & GitHub</div><div class="tech-card-type">Version Control</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PREMIUM FOOTER ===== -->
     <footer>
-        <p>&copy; 2026 ATL LAB Innovation Project. All Rights Reserved.</p>
+        <style>
+            footer {
+                background: #020609;
+                border-top: 1px solid rgba(255,255,255,0.05);
+                padding: 0;
+            }
+            .footer-main {
+                padding: 4rem 0 3rem;
+            }
+            .footer-grid {
+                display: grid;
+                grid-template-columns: 1.5fr 1fr 1fr 1fr;
+                gap: 3rem;
+            }
+            @media (max-width: 900px) {
+                .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            }
+            @media (max-width: 500px) {
+                .footer-grid { grid-template-columns: 1fr; }
+            }
+            .footer-brand p {
+                color: #475569;
+                font-size: 0.9rem;
+                line-height: 1.7;
+                margin-top: 1rem;
+                max-width: 280px;
+            }
+            .footer-col h4 {
+                font-family: 'Space Grotesk', sans-serif;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: #475569;
+                margin-bottom: 1.2rem;
+                font-weight: 600;
+            }
+            .footer-col ul {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 0.7rem;
+            }
+            .footer-col ul a {
+                color: #64748b;
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: color 0.2s;
+            }
+            .footer-col ul a:hover {
+                color: var(--primary);
+            }
+            .footer-bottom {
+                border-top: 1px solid rgba(255,255,255,0.04);
+                padding: 1.5rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+            .footer-bottom p {
+                color: #334155;
+                font-size: 0.82rem;
+            }
+            .footer-badges {
+                display: flex;
+                gap: 0.5rem;
+            }
+            .footer-badge {
+                background: rgba(251,191,36,0.07);
+                border: 1px solid rgba(251,191,36,0.15);
+                color: #64748b;
+                border-radius: 50px;
+                padding: 0.3rem 0.8rem;
+                font-size: 0.75rem;
+                font-family: monospace;
+            }
+        </style>
+        <div class="container footer-main">
+            <div class="footer-grid">
+                <!-- Brand -->
+                <div class="footer-brand">
+                    <a href="#home" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.75rem;">
+                        <div style="width:36px;height:36px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                            <i data-lucide="zap" color="#030712" style="width:20px;height:20px;"></i>
+                        </div>
+                        <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#94a3b8;">VISION<span style="color:#fbbf24;">TEAM</span></span>
+                    </a>
+                    <p>ATL LAB Innovation Project 2026–27. Building real-world IoT and AI solutions for a better tomorrow.</p>
+                </div>
+                <!-- Quick Links -->
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#team">The Team</a></li>
+                        <li><a href="#accident-alert-showcase">Accident Alert</a></li>
+                        <li><a href="#smart-waste-showcase">Smart Waste Hub</a></li>
+                        <li><a href="#demo">IoT Simulator</a></li>
+                        <li><a href="#project">Project Ideas</a></li>
+                    </ul>
+                </div>
+                <!-- Projects -->
+                <div class="footer-col">
+                    <h4>Projects</h4>
+                    <ul>
+                        <li><a href="#accident-alert-showcase">Eye Alert AI</a></li>
+                        <li><a href="#smart-waste-showcase">Smart Waste Hub</a></li>
+                        <li><a href="#journey">Innovation Journey</a></li>
+                        <li><a href="#tech-stack">Tech Stack</a></li>
+                    </ul>
+                </div>
+                <!-- Contact -->
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#contact">Get In Touch</a></li>
+                        <li><a href="mailto:contact@atllab.com">contact@atllab.com</a></li>
+                        <li><a href="#about">About ATL Lab</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2026 VISION TEAM · ATL LAB Innovation Project. All Rights Reserved.</p>
+                <div class="footer-badges">
+                    <span class="footer-badge">IoT</span>
+                    <span class="footer-badge">AI/ML</span>
+                    <span class="footer-badge">Flutter</span>
+                    <span class="footer-badge">STEM</span>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <!-- ===== SCROLL TO TOP BUTTON ===== -->
+    <button id="scroll-top-btn" title="Back to top" style="
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        color: #030712;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        box-shadow: 0 8px 25px rgba(251,191,36,0.4);
+        transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    " onmouseover="this.style.transform='translateY(-4px) scale(1.1)';this.style.boxShadow='0 16px 35px rgba(251,191,36,0.6)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 25px rgba(251,191,36,0.4)'">
+        <i data-lucide="chevron-up" style="width:22px;height:22px;"></i>
+    </button>
 
     <!-- Scripts -->
     <script src="projects.js"></script>
@@ -1017,11 +3776,67 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Preloader
-        window.addEventListener('load', () => {
+        // Upgraded Cinematic Preloader Simulation
+        window.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
-            setTimeout(() => preloader.style.display = 'none', 500);
+            const bootText = document.getElementById('boot-text');
+            const fill = document.getElementById('progress-bar-fill');
+            const percentage = document.getElementById('boot-percentage');
+
+            if (!bootText || !fill || !percentage) {
+                setTimeout(() => {
+                    if (preloader) {
+                        preloader.style.opacity = '0';
+                        setTimeout(() => preloader.style.display = 'none', 800);
+                    }
+                }, 1000);
+                return;
+            }
+
+            const bootPhrases = [
+                "INITIALIZING NEURAL NETWORK ARCHITECTURES...",
+                "LOADING DRIVER DROWSINESS DETECTION MATRIX...",
+                "CALIBRATING ULTRASONIC SENSORS...",
+                "ESTABLISHING MQTT TELEMETRY PIPELINE...",
+                "CALCULATING OPTIMAL WASTE DISPATCH ROUTES...",
+                "SYNCHRONIZING DUAL-AXIS SOLAR POSITIONING...",
+                "AUTHENTICATING SECURE CLOUD GATEWAYS...",
+                "SYSTEMS OPTIMIZED - WELCOME TO VISION CORE..."
+            ];
+
+            let progress = 0;
+            let phraseIndex = 0;
+
+            const bootInterval = setInterval(() => {
+                progress += Math.floor(Math.random() * 8) + 4;
+                if (progress > 100) progress = 100;
+
+                fill.style.width = progress + "%";
+                percentage.textContent = progress + "%";
+
+                const phraseSection = Math.floor(progress / (100 / bootPhrases.length));
+                if (phraseSection > phraseIndex && phraseSection < bootPhrases.length) {
+                    phraseIndex = phraseSection;
+                    bootText.textContent = bootPhrases[phraseIndex];
+                    bootText.style.color = 'var(--primary)';
+                    setTimeout(() => {
+                        if (bootText) bootText.style.color = 'var(--text-dim)';
+                    }, 150);
+                }
+
+                if (progress >= 100) {
+                    clearInterval(bootInterval);
+                    bootText.textContent = "VISION CORE ONLINE (SYSTEM OK)";
+                    bootText.style.color = '#10b981';
+                    
+                    setTimeout(() => {
+                        preloader.style.opacity = '0';
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                        }, 800);
+                    }, 600);
+                }
+            }, 80);
         });
 
         // Background Slideshow Logic
@@ -1109,6 +3924,7 @@
         // Scroll Progress & Navbar Effect
         const scrollProgress = document.getElementById('scroll-progress');
         const navbar = document.getElementById('navbar');
+        const scrollTopBtn = document.getElementById('scroll-top-btn');
 
         window.addEventListener('scroll', () => {
             // Scroll Progress
@@ -1122,6 +3938,15 @@
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+
+            // Scroll-to-top button visibility
+            if (scrollTopBtn) {
+                if (window.scrollY > 400) {
+                    scrollTopBtn.style.display = 'flex';
+                } else {
+                    scrollTopBtn.style.display = 'none';
+                }
             }
         });
 
@@ -1137,6 +3962,42 @@
                 }
             });
         }, observerOptions);
+
+        // --- Scroll to Top ---
+        if (scrollTopBtn) {
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // --- Animated Stats Counter ---
+        function animateCounter(el) {
+            const target = parseInt(el.dataset.target);
+            const suffix = el.dataset.suffix || '';
+            const duration = 1800;
+            const step = target / (duration / 16);
+            let current = 0;
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                el.textContent = Math.floor(current) + suffix;
+            }, 16);
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.stat-num').forEach(animateCounter);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        const statsSection = document.getElementById('stats-section');
+        if (statsSection) statsObserver.observe(statsSection);
 
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
@@ -1175,6 +4036,330 @@
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // --- Interactive Star Particle Background ---
+        const canvas = document.getElementById('particles-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouse = { x: null, y: null, radius: 150 };
+
+            const resizeCanvas = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 1.5 + 0.5;
+                    this.speedX = (Math.random() * 0.4) - 0.2;
+                    this.speedY = (Math.random() * 0.4) - 0.2;
+                }
+                draw() {
+                    ctx.fillStyle = `rgba(251, 191, 36, ${0.4 + Math.random() * 0.3})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = mouse.x - this.x;
+                        const dy = mouse.y - this.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < mouse.radius) {
+                            const forceDirectionX = dx / distance;
+                            const forceDirectionY = dy / distance;
+                            const maxDistance = mouse.radius;
+                            const force = (maxDistance - distance) / maxDistance;
+                            const directionX = forceDirectionX * force * 3;
+                            const directionY = forceDirectionY * force * 3;
+                            this.x -= directionX;
+                            this.y -= directionY;
+                        }
+                    }
+                }
+            }
+
+            const initParticles = () => {
+                particles = [];
+                const numberOfParticles = Math.min((canvas.width * canvas.height) / 10000, 100);
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particles.push(new Particle());
+                }
+            };
+            initParticles();
+
+            const animateParticles = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+
+                for (let a = 0; a < particles.length; a++) {
+                    for (let b = a + 1; b < particles.length; b++) {
+                        const dx = particles[a].x - particles[b].x;
+                        const dy = particles[a].y - particles[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 110) {
+                            ctx.strokeStyle = `rgba(251, 191, 36, ${0.12 - (distance / 110) * 0.12})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[a].x, particles[a].y);
+                            ctx.lineTo(particles[b].x, particles[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            };
+            animateParticles();
+
+            const cursorGlow = document.getElementById('cursor-glow');
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+                if (cursorGlow) {
+                    cursorGlow.style.opacity = '1';
+                    cursorGlow.style.left = e.clientX + 'px';
+                    cursorGlow.style.top = e.clientY + 'px';
+                }
+            });
+
+            window.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+                if (cursorGlow) cursorGlow.style.opacity = '0';
+            });
+        }
+
+        /* --- Live IoT Simulator Dashboard Logic --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab Switching
+            const tabs = document.querySelectorAll('.sim-tab');
+            const panels = document.querySelectorAll('.sim-panel');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    document.getElementById(`panel-${tab.dataset.sim}`).classList.add('active');
+                });
+            });
+
+            // --- Eye Alert Simulation ---
+            const btnNormal = document.getElementById('btn-state-normal');
+            const btnSleep = document.getElementById('btn-state-sleep');
+            const alertOverlay = document.getElementById('camera-alert-overlay');
+            const eyeStatus = document.getElementById('eye-status');
+            const earScore = document.getElementById('eye-ear');
+            const earChartPath = document.getElementById('ear-chart');
+            const leftEye = document.getElementById('left-eye');
+            const rightEye = document.getElementById('right-eye');
+            const buzzer = document.getElementById('sim-buzzer');
+
+            if (btnNormal && btnSleep) {
+                let earHistory = Array(11).fill(0.3);
+                let isAsleep = false;
+
+                function updateEARGraph() {
+                    let targetEar = isAsleep ? 0.15 : 0.32;
+                    let currentEar = targetEar + (Math.random() * 0.04 - 0.02);
+                    
+                    earHistory.shift();
+                    earHistory.push(currentEar);
+
+                    earScore.textContent = currentEar.toFixed(2);
+                    
+                    let eyeHeight = isAsleep ? 0.5 : 3;
+                    if(leftEye) leftEye.setAttribute('ry', eyeHeight);
+                    if(rightEye) rightEye.setAttribute('ry', eyeHeight);
+
+                    let pathD = "M0," + (40 - earHistory[0] * 60);
+                    for(let i=1; i<earHistory.length; i++) {
+                        pathD += ` L${i*20},${40 - earHistory[i] * 60}`;
+                    }
+                    if(earChartPath) {
+                        earChartPath.setAttribute('d', pathD);
+                        earChartPath.setAttribute('stroke', isAsleep ? '#ef4444' : 'var(--primary)');
+                    }
+                }
+
+                setInterval(updateEARGraph, 500);
+
+                btnNormal.addEventListener('click', () => {
+                    isAsleep = false;
+                    btnNormal.classList.add('active');
+                    btnSleep.classList.remove('active');
+                    if(alertOverlay) alertOverlay.classList.remove('alerting');
+                    eyeStatus.textContent = 'MONITORING';
+                    eyeStatus.className = 'tel-value text-green';
+                    if(buzzer) { buzzer.pause(); buzzer.currentTime = 0; }
+                });
+
+                btnSleep.addEventListener('click', () => {
+                    isAsleep = true;
+                    btnSleep.classList.add('active');
+                    btnNormal.classList.remove('active');
+                    if(alertOverlay) alertOverlay.classList.add('alerting');
+                    eyeStatus.textContent = 'DANGER!';
+                    eyeStatus.className = 'tel-value text-red';
+                    if(buzzer) buzzer.play().catch(e => console.log("Audio play prevented: " + e));
+                });
+            }
+
+            // --- Smart Waste Hub Simulation ---
+            const btnFill = document.getElementById('btn-simulate-waste');
+            const btnEmpty = document.getElementById('btn-empty-waste');
+            let bins = [35, 72, 89];
+            
+            function updateBins() {
+                let total = 0;
+                let needDispatch = false;
+
+                bins.forEach((val, idx) => {
+                    total += val;
+                    const fillDiv = document.getElementById(`bin-${idx+1}-fill`);
+                    const percentTag = document.getElementById(`bin-${idx+1}-percent`);
+                    const statusTag = document.getElementById(`bin-${idx+1}-status`);
+                    
+                    if(!fillDiv) return;
+
+                    fillDiv.style.height = `${val}%`;
+                    percentTag.textContent = `${Math.round(val)}%`;
+                    
+                    fillDiv.className = 'bin-fill';
+                    if(val < 60) {
+                        fillDiv.classList.add('fill-green');
+                        statusTag.textContent = 'Normal';
+                        statusTag.className = 'bin-status text-green';
+                    } else if (val < 85) {
+                        fillDiv.classList.add('fill-orange');
+                        statusTag.textContent = 'Warning';
+                        statusTag.className = 'bin-status text-orange';
+                    } else {
+                        fillDiv.classList.add('fill-red');
+                        statusTag.textContent = 'Alert!';
+                        statusTag.className = 'bin-status text-red';
+                        needDispatch = true;
+                    }
+                });
+
+                const avgLabel = document.getElementById('waste-avg');
+                if(avgLabel) avgLabel.textContent = (total / bins.length).toFixed(1) + '%';
+                
+                const routeStatus = document.getElementById('waste-route');
+                if(routeStatus) {
+                    if (needDispatch) {
+                        routeStatus.textContent = 'DISPATCH NEEDED';
+                        routeStatus.className = 'tel-value text-red';
+                    } else {
+                        routeStatus.textContent = 'OPTIMIZED';
+                        routeStatus.className = 'tel-value text-green';
+                    }
+                }
+            }
+
+            if(btnFill) {
+                btnFill.addEventListener('click', () => {
+                    bins = bins.map(v => Math.min(100, v + Math.random() * 20 + 5));
+                    updateBins();
+                });
+            }
+
+            if(btnEmpty) {
+                btnEmpty.addEventListener('click', () => {
+                    bins = [0, 0, 0];
+                    updateBins();
+                });
+            }
+
+            // --- Solar Tracker Simulation ---
+            const sun = document.getElementById('sim-sun');
+            const panel = document.getElementById('tracker-panel-graphic');
+            const solarAngle = document.getElementById('solar-angle');
+            
+            if (sun && panel) {
+                const solarContainer = sun.parentElement;
+                let isDraggingSun = false;
+
+                sun.addEventListener('mousedown', () => isDraggingSun = true);
+                window.addEventListener('mouseup', () => isDraggingSun = false);
+                
+                solarContainer.addEventListener('mousemove', (e) => {
+                    if (!isDraggingSun) return;
+                    
+                    const rect = solarContainer.getBoundingClientRect();
+                    let x = e.clientX - rect.left;
+                    let y = e.clientY - rect.top;
+                    
+                    x = Math.max(20, Math.min(rect.width - 20, x));
+                    y = Math.max(20, Math.min(rect.height / 1.5, y));
+                    
+                    sun.style.left = `${x}px`;
+                    sun.style.top = `${y}px`;
+                    
+                    const pivotX = rect.width / 2;
+                    const pivotY = rect.height - 50;
+                    
+                    const dx = x - pivotX;
+                    const dy = pivotY - y;
+                    
+                    let angle = Math.atan2(dx, dy) * (180 / Math.PI);
+                    angle = Math.max(-60, Math.min(60, angle));
+                    
+                    panel.style.transform = `rotate(${angle}deg)`;
+                    if(solarAngle) solarAngle.textContent = Math.round(angle) + '°';
+                });
+            }
+
+            // Weather Tabs
+            const weatherTabs = document.querySelectorAll('.weather-tab');
+            const effSpan = document.getElementById('solar-efficiency');
+            const yieldSpan = document.getElementById('solar-yield');
+            const sunIconContainer = document.getElementById('sim-sun');
+            
+            weatherTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    weatherTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    if(!sunIconContainer) return;
+                    const solarContainer = sunIconContainer.parentElement;
+
+                    const weather = tab.dataset.weather;
+                    if(weather === 'sunny') {
+                        solarContainer.style.background = 'radial-gradient(circle at center, #0c1524 0%, #030712 100%)';
+                        effSpan.textContent = '96%'; effSpan.className = 'tel-value text-green';
+                        yieldSpan.textContent = '142W';
+                        sunIconContainer.style.opacity = '1';
+                    } else if (weather === 'cloudy') {
+                        solarContainer.style.background = 'radial-gradient(circle at center, #1e293b 0%, #0f172a 100%)';
+                        effSpan.textContent = '62%'; effSpan.className = 'tel-value text-orange';
+                        yieldSpan.textContent = '84W';
+                        sunIconContainer.style.opacity = '0.5';
+                    } else if (weather === 'rainy') {
+                        solarContainer.style.background = 'radial-gradient(circle at center, #0f172a 0%, #020617 100%)';
+                        effSpan.textContent = '24%'; effSpan.className = 'tel-value text-red';
+                        yieldSpan.textContent = '35W';
+                        sunIconContainer.style.opacity = '0.2';
+                    }
+                });
+            });
         });
     </script>
 </body>
